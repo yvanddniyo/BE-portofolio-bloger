@@ -41,7 +41,6 @@ router.get("/user/:id/", async(req, res) => {
         res.send({error: "Sorry user doesn't exist."})
     }
 })
-
 //  Router of  updating a user.
 
 
