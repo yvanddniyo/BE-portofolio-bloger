@@ -15,7 +15,7 @@ router.post('/blog', async(req, res) => {
     const eachBlog =  new Blog({
         title: req.body.title,
         image: req.body.image,
-        content: req.body.content
+        content: req.body.content,
     })
     await eachBlog.save()
     res.send(eachBlog)
@@ -33,6 +33,7 @@ router.get("/blogs/:id", async(req, res) => {
         res.send({error: "Sorry Blog doesn't exist."})
     }
 })
+
 
 /* Update your Blog */
 
@@ -81,8 +82,5 @@ router.delete("/blogs/:id", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
-
-
 
 module.exports = router
