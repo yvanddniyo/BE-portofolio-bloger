@@ -10,10 +10,11 @@ const routes = require("./routes/blogerRoute")
 
 mongoose
 .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
 })
 .then(() => {
+    console.log('Successfully connect to the server')
 
 /*new routes*/
 const app = express();
