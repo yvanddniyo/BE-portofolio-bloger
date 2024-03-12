@@ -1,32 +1,31 @@
-const express = require("express");
-const Blog = require("../models/blog")
-const router = express.Router() // It lets us register the routes and use it in our application (in index.js)
+const blogService = require("../service/blogService")
+const Blog = require("../service/blogService")
 
 // Get all posts
 
-router.get('/blogs', async(req, res) => {
-    const blogs = await Blog.find()
+const viewAllBlog = async(req, res) => {
+    const blogs = await viewAllBlog()
     res.send(blogs)
-})
+}
 
 /* create the a blogs */
 
-router.post('/blog', async(req, res) => {
-    const eachBlog =  new Blog({
-        title: req.body.title,
-        image: req.body.image,
-
-        content: req.body.content
-
-     
-    })
-    await eachBlog.save()
+const createBlog = async(req, res) => {
+    try {
+        const {title, image, content} = req.body
+    const eachBlog =  await blogService.createBlog(title, image, content);
+    // eachBlog.save()
     res.send(eachBlog)
-})  
+    
+} catch (error) {
+        res.status(201).json(eachBlog)
+        
+    }
+} 
 
 /* Get individual blog */
 
-router.get("/blogs/:id", async(req, res) => {
+const singleBlog = async(req, res) => {
     try {
         const oneBlog = await Blog.findOne({_id:req.params.id})
         res.send(oneBlog)
@@ -35,11 +34,11 @@ router.get("/blogs/:id", async(req, res) => {
         res.status(404)
         res.send({error: "Sorry Blog doesn't exist."})
     }
-})
+}
 
 /* Update your Blog */
 
-router.patch("/blogs/:id", async (req, res) => {
+const updateBlog = async (req, res) => {
     try {
         const blog = await Blog.findOne({ _id: req.params.id });
 
@@ -67,12 +66,12 @@ router.patch("/blogs/:id", async (req, res) => {
         console.error(`Error updating blog with ID ${req.params.id}:`, error);
         res.status(500).send({ error: "Internal Server Error." });
     }
-});
+};
 
 
 /* Deleting a blog */
 
-router.delete("/blogs/:id", async (req, res) => {
+const deleteBlog =  async (req, res) => {
     try {
         const blog = await Blog.findByIdAndDelete({ _id: req.params.id });
 
@@ -83,7 +82,7 @@ router.delete("/blogs/:id", async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+};
 
 
-module.exports = router
+module.exports = userController

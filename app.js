@@ -1,9 +1,8 @@
 const express =  require('express');
 const mongoose = require('mongoose')
-const routes = require("./routes/blogerRoute")
+const app = express();
+const routes =require('../Blogger/src/routes/index')
 
- require('dotenv').config();
- const userRoute = require("./routes/user")
  require('dotenv').config();
 
 // connect to the mongoDB
@@ -17,10 +16,8 @@ mongoose
     console.log('Successfully connect to the server')
 
 /*new routes*/
-const app = express();
 app.use(express.json());
 app.use('/api', routes);
-app.use('/api', userRoute);
 
 
 app.listen(5000, () => {
