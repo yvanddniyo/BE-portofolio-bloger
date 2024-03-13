@@ -1,36 +1,38 @@
-const blogService = require("../service/blogService")
-const Blog = require("../service/blogService")
+// const blogService = require("../service/blogService")
+import blogService from "../service/blogService"
+import { Request, Response } from "express"
+// import Blog from "../service/blogService"
 
 // Get all posts
 
-const viewAllBlog = async(req, res) => {
+const viewAllBlog = async(req:Request, res:Response) => {
     try {
         const blogs = await blogService.viewAllBlog()
-        res.send(blogs)
+        res.json(blogs)
     }
    catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: (error as Error).message });
   }
     }
 
 /* create the a blogs */
 
-const createBlog = async(req, res) => {
+const createBlog = async(req:Request, res:Response) => {
     try {
     const {title, image, content} = req.body
     const eachBlog =  await blogService.createBlog(title, image, content);
     res.status(201).json(eachBlog)
  } 
  catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: (error as Error).message });
     }
 } 
 
 /* Get individual blog */
 
-const singleBlog = async(req, res) => {
+const singleBlog = async(req:Request, res:Response) => {
     try {
-        const id  = {_id: req.params.id}
+        const id  = req.params.id
         const oneBlog = await blogService.singleBlog(id)
         res.send(oneBlog)  
     } catch{
@@ -41,9 +43,9 @@ const singleBlog = async(req, res) => {
 
 /* Update your Blog */
 
-const updateBlog = async (req, res) => {
+const updateBlog = async (req:Request, res:Response) => {
     try {
-        const id = {_id: req.params.id}
+        const id = req.params.id
         const {title, image, content} = req.body
         const updateBlog = await blogService.updateBlog(id, title, image, content);
         res.json(updateBlog)
@@ -53,20 +55,6 @@ const updateBlog = async (req, res) => {
             res.status(404).send({ error: "Blog not found." });
         }
 
-        // if (req.body.title) {
-        //     blog.title = req.body.title;
-        // }
-        // if (req.body.title) {
-        //     blog.image = req.body.image;
-        // }
-
-        // if (req.body.content) {
-        //     blog.content = req.body.content;
-        // }
-
-        // await blog.save();
-        // console.log(`Blog with ID ${req.params.id} updated successfully.`);
-        // res.send(blog);
     } catch (error) {
         console.error(`Error updating blog with ID ${req.params.id}:`, error);
         res.status(500).send({ error: "Internal Server Error." });
@@ -76,7 +64,7 @@ const updateBlog = async (req, res) => {
 
 /* Deleting a blog */
 
-const deleteBlog =  async (req, res) => {
+const deleteBlog =  async (req:Request, res:Response) => {
     try {
      const blog =   await blogService.deleteBlog(req.params.id)
      if (!blog) {
@@ -84,12 +72,12 @@ const deleteBlog =  async (req, res) => {
         }
         res.json({ message: 'Blog deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message:(error as Error).message });
     }
 };
 
 
-module.exports = {
+export default  {
     viewAllBlog,
     createBlog,
     singleBlog,

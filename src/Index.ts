@@ -1,7 +1,9 @@
-const express =  require('express');
-const connectDB = require("./src/config/db")
+import express from 'express'
+
+// const connectDB = require("./src/config/db")
+import connectDB from "./config/db"
 const app = express();
-const router =require("./src/routes/blogerRoute")
+import router from "./routes/blogerRoute"
 
 const PORT = process.env.PORT || 5000;
 

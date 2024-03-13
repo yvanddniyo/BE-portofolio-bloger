@@ -1,6 +1,6 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const blogController = require('../controller/blogController'); // It lets us register the routes and use it in our application (in index.js)
+import blogController from'../controller/blogController'; 
 
 router.get('/blogs', blogController.viewAllBlog);
 router.post('/blogs', blogController.createBlog);
@@ -8,4 +8,5 @@ router.get('/blogs/:id', blogController.singleBlog);
 router.patch('/blogs/:id', blogController.updateBlog);
 router.delete('/blogs/:id', blogController.deleteBlog);
 
-module.exports = router;
+
+export default router
