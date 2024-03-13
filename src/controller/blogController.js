@@ -4,22 +4,25 @@ const Blog = require("../service/blogService")
 // Get all posts
 
 const viewAllBlog = async(req, res) => {
-    const blogs = await viewAllBlog()
-    res.send(blogs)
-}
+    try {
+        const blogs = await blogService.viewAllBlog()
+        res.send(blogs)
+    }
+   catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+    }
 
 /* create the a blogs */
 
 const createBlog = async(req, res) => {
     try {
-        const {title, image, content} = req.body
+    const {title, image, content} = req.body
     const eachBlog =  await blogService.createBlog(title, image, content);
-    // eachBlog.save()
-    res.send(eachBlog)
-    
-} catch (error) {
-        res.status(201).json(eachBlog)
-        
+    res.status(201).json(eachBlog)
+ } 
+ catch (error) {
+        res.status(500).json({ message: error.message });
     }
 } 
 
@@ -27,9 +30,9 @@ const createBlog = async(req, res) => {
 
 const singleBlog = async(req, res) => {
     try {
-        const oneBlog = await Blog.findOne({_id:req.params.id})
-        res.send(oneBlog)
-        
+        const id  = {_id: req.params.id}
+        const oneBlog = await blogService.singleBlog(id)
+        res.send(oneBlog)  
     } catch{
         res.status(404)
         res.send({error: "Sorry Blog doesn't exist."})
@@ -40,28 +43,30 @@ const singleBlog = async(req, res) => {
 
 const updateBlog = async (req, res) => {
     try {
-        const blog = await Blog.findOne({ _id: req.params.id });
+        const id = {_id: req.params.id}
+        const {title, image, content} = req.body
+        const updateBlog = await blogService.updateBlog(id, title, image, content);
+        res.json(updateBlog)
 
-        if (!blog) {
+        if (!updateBlog) {
             console.error(`Blog with ID ${req.params.id} not found.`);
             res.status(404).send({ error: "Blog not found." });
-            return;
         }
 
-        if (req.body.title) {
-            blog.title = req.body.title;
-        }
-        if (req.body.title) {
-            blog.image = req.body.image;
-        }
+        // if (req.body.title) {
+        //     blog.title = req.body.title;
+        // }
+        // if (req.body.title) {
+        //     blog.image = req.body.image;
+        // }
 
-        if (req.body.content) {
-            blog.content = req.body.content;
-        }
+        // if (req.body.content) {
+        //     blog.content = req.body.content;
+        // }
 
-        await blog.save();
-        console.log(`Blog with ID ${req.params.id} updated successfully.`);
-        res.send(blog);
+        // await blog.save();
+        // console.log(`Blog with ID ${req.params.id} updated successfully.`);
+        // res.send(blog);
     } catch (error) {
         console.error(`Error updating blog with ID ${req.params.id}:`, error);
         res.status(500).send({ error: "Internal Server Error." });
@@ -73,10 +78,9 @@ const updateBlog = async (req, res) => {
 
 const deleteBlog =  async (req, res) => {
     try {
-        const blog = await Blog.findByIdAndDelete({ _id: req.params.id });
-
-        if (!blog) {
-            return res.status(404).json({ message: 'Blog not found' });
+     const blog =   await blogService.deleteBlog(req.params.id)
+     if (!blog) {
+         return res.status(404).json({ message: 'Blog not found' });
         }
         res.json({ message: 'Blog deleted successfully' });
     } catch (error) {
@@ -85,4 +89,10 @@ const deleteBlog =  async (req, res) => {
 };
 
 
-module.exports = userController
+module.exports = {
+    viewAllBlog,
+    createBlog,
+    singleBlog,
+    updateBlog,
+    deleteBlog
+};

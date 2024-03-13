@@ -14,7 +14,7 @@ const blogService ={
         return await Blog.findOne(id)
     },
     
-    upadateBlog: async(id, title, image, content) => {
+    updateBlog: async(id, title, image, content) => {
      return await Blog.findByIdAndUpdate(id, {title, image, content}, {new: true})
     },
     
