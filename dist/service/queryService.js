@@ -12,23 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const blog_1 = __importDefault(require("../models/blog"));
-const blogService = {
-    viewAllBlog: () => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.find();
+const QueryModel_1 = __importDefault(require("../models/QueryModel"));
+const queriesServices = {
+    viewAllQuery: () => __awaiter(void 0, void 0, void 0, function* () {
+        return yield QueryModel_1.default.find();
     }),
-    createBlog: (title, image, content) => __awaiter(void 0, void 0, void 0, function* () {
-        const blog = new blog_1.default({ title, image, content });
-        return blog.save();
+    createQuery: (name, email, message) => __awaiter(void 0, void 0, void 0, function* () {
+        const newQuery = new QueryModel_1.default({ name, email, message });
+        return newQuery.save();
     }),
-    singleBlog: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findById(id);
-    }),
-    updateBlog: (id, title, image, content) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findByIdAndUpdate(id, { title, image, content }, { new: true });
-    }),
-    deleteBlog: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findByIdAndDelete(id);
+    deleteQuery: (id) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield QueryModel_1.default.findByIdAndDelete(id);
     })
 };
-exports.default = blogService;
+exports.default = queriesServices;

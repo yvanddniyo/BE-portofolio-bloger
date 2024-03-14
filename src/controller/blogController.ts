@@ -1,7 +1,5 @@
-// const blogService = require("../service/blogService")
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
-// import Blog from "../service/blogService"
 
 // Get all posts
 

@@ -12,24 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// const Blog = require('../models/blog')
+const blogLikes_1 = __importDefault(require("../models/blogLikes"));
 const blog_1 = __importDefault(require("../models/blog"));
-const blogService = {
-    viewAllBlog: () => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.find();
+const likeBlogs = {
+    likeBlog: (blogId, userId, like) => __awaiter(void 0, void 0, void 0, function* () {
+        const blogIds = blog_1.default.findOne({ _id: blogId });
+        if (!blogIds) {
+            throw new Error("Invalid blog ID");
+        }
+        const existLike = yield blogLikes_1.default.findOne({ blogId, userId });
+        if (existLike) {
+            throw new Error("you already like this blog");
+        }
+        const newLike = new blogLikes_1.default({
+            blogId,
+            userId,
+            like
+        });
+        yield newLike.save();
     }),
-    createBlog: (title, image, content) => __awaiter(void 0, void 0, void 0, function* () {
-        const blog = new blog_1.default({ title, image, content });
-        return blog.save();
-    }),
-    singleBlog: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findById(id);
-    }),
-    updateBlog: (id, title, image, content) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findByIdAndUpdate(id, { title, image, content }, { new: true });
-    }),
-    deleteBlog: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findByIdAndDelete(id);
+    viewLikes: (blogId) => __awaiter(void 0, void 0, void 0, function* () {
+        const likes = yield blogLikes_1.default.find({ blogId: blogId });
+        return likes;
     })
 };
-exports.default = blogService;
+exports.default = likeBlogs;

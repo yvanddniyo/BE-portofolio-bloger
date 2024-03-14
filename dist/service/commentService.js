@@ -12,23 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const blog_1 = __importDefault(require("../models/blog"));
-const blogService = {
-    viewAllBlog: () => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.find();
+const blogComment_1 = __importDefault(require("../models/blogComment"));
+const commentService = {
+    createComment: (blogId, name, content) => __awaiter(void 0, void 0, void 0, function* () {
+        // const blogIds = blog.findOne({_id: blogId}) 
+        // if (!blogIds) {
+        //     throw new Error("blog not found")
+        // } 
+        const newComment = yield blogComment_1.default.create({
+            blogId,
+            name,
+            content
+        });
+        const savedComment = yield newComment.save();
+        return savedComment;
     }),
-    createBlog: (title, image, content) => __awaiter(void 0, void 0, void 0, function* () {
-        const blog = new blog_1.default({ title, image, content });
-        return blog.save();
-    }),
-    singleBlog: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findById(id);
-    }),
-    updateBlog: (id, title, image, content) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findByIdAndUpdate(id, { title, image, content }, { new: true });
-    }),
-    deleteBlog: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield blog_1.default.findByIdAndDelete(id);
+    viewAllComment: (blogId) => __awaiter(void 0, void 0, void 0, function* () {
+        const comments = yield blogComment_1.default.find({ blogId: blogId });
+        return comments;
     })
 };
-exports.default = blogService;
+exports.default = commentService;

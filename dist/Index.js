@@ -8,6 +8,9 @@ const express_1 = __importDefault(require("express"));
 const db_1 = __importDefault(require("./config/db"));
 const app = (0, express_1.default)();
 const blogerRoute_1 = __importDefault(require("./routes/blogerRoute"));
+const commentRoute_1 = __importDefault(require("./routes/commentRoute"));
+const likeRouter_1 = __importDefault(require("./routes/likeRouter"));
+const queryRoute_1 = __importDefault(require("./routes/queryRoute"));
 const PORT = process.env.PORT || 5000;
 // connect to the mongoDB
 (0, db_1.default)();
@@ -15,6 +18,9 @@ const PORT = process.env.PORT || 5000;
 app.use(express_1.default.json());
 /*new routes*/
 app.use('/api/v1', blogerRoute_1.default);
+app.use('/api/v1', commentRoute_1.default);
+app.use('/api/v1', likeRouter_1.default);
+app.use('/api/v1', queryRoute_1.default);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

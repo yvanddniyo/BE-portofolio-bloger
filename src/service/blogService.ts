@@ -1,4 +1,3 @@
-// const Blog = require('../models/blog')
 import Blog from "../models/blog"
 
 const blogService ={
