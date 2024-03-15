@@ -32,7 +32,7 @@ const authService = {
             throw new Error("User email not found.");
         }
         const role = user.email.endsWith('@admin.com') ? 'admin' : 'user';
-        const token = jsonwebtoken_1.default.sign({ userId: user._id, role }, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c', { expiresIn: '1h' });
+        const token = jsonwebtoken_1.default.sign({ userId: user._id, role }, 'process.env.JWT_TOKEN', { expiresIn: '1h' });
         return { message: "Login successful", token, user: { email: user.email, username: user.username }, role };
     })
 };
