@@ -15,25 +15,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const blogLikes_1 = __importDefault(require("../models/blogLikes"));
 const blog_1 = __importDefault(require("../models/blog"));
 const likeBlogs = {
-    likeBlog: (blogId, userId, like) => __awaiter(void 0, void 0, void 0, function* () {
-        const blogIds = blog_1.default.findOne({ _id: blogId });
-        if (!blogIds) {
-            throw new Error("Invalid blog ID");
+    likeBlog: (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const blogDoc = yield blog_1.default.findOne({ _id: blogId });
+            if (!blogDoc) {
+                throw new Error("Invalid blog ID");
+            }
+            const existLike = yield blogLikes_1.default.findOne({ blogId, userId });
+            if (existLike) {
+                throw new Error("You already like this blog");
+            }
+            else {
+                const newLike = new blogLikes_1.default({
+                    blogId,
+                    userId,
+                });
+                yield newLike.save();
+            }
         }
-        const existLike = yield blogLikes_1.default.findOne({ blogId, userId });
-        if (existLike) {
-            throw new Error("you already like this blog");
+        catch (error) {
+            console.error("Error liking the blog:", error.message);
+            throw error;
         }
-        const newLike = new blogLikes_1.default({
-            blogId,
-            userId,
-            like
-        });
-        yield newLike.save();
     }),
     viewLikes: (blogId) => __awaiter(void 0, void 0, void 0, function* () {
         const likes = yield blogLikes_1.default.find({ blogId: blogId });
         return likes;
+    }),
+    countLikes: (blogId) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const count = yield blogLikes_1.default.countDocuments({ blogId: blogId });
+            return count;
+        }
+        catch (error) {
+            console.error("Error counting likes for the blog:", error.message);
+            throw error;
+        }
     })
 };
 exports.default = likeBlogs;

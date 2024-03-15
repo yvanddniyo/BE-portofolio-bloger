@@ -12,34 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const likeServices_1 = __importDefault(require("../service/likeServices"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const likeBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { blogId, userId } = req.body;
-    let _id = req.params.id;
-    if (!mongoose_1.default.Types.ObjectId.isValid(_id)) {
-        return res.status(400).send({ message: "Invalid Blog Id" });
-    }
+const authService_1 = __importDefault(require("../service/authService"));
+const loginUserMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield likeServices_1.default.likeBlog(blogId, userId);
-        return res.status(201).json({ message: "You successfully liked the blog" });
-    }
-    catch (error) {
-        console.error(error);
-        return res.status(400).json({ message: error.message });
-    }
-});
-const viewLikes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const blogId = req.params.id;
-        const likes = yield likeServices_1.default.viewLikes(blogId);
-        res.send(likes);
+        const { username, password } = req.body;
+        if (!username || !password) {
+            throw new Error("Username and password are required.");
+        }
+        const user = yield authService_1.default.loginUser(username, password);
+        if (!user) {
+            return res.status(401).json({ message: "You're not in our User." });
+        }
+        req.user = user;
+        if (user.role !== 'admin') {
+            return res.status(403).json({ message: "Sorry, you are not an admin." });
+        }
+        next();
     }
     catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
-exports.default = {
-    likeBlog,
-    viewLikes
-};
+exports.default = loginUserMiddleware;
