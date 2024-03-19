@@ -13,9 +13,11 @@ const viewAllUser = async (req: Request, res: Response) => {
 
 const createUser = async(req:Request, res:Response) => {
     try {
-    const {username, email, password, token} = req.body
-    const eachUser =  await userServices.createUser(username, email, password, token);
-    res.status(201).json(eachUser)
+    const {username, email, password} = req.body
+    const eachUser =  await userServices.createUser(username, email, password);
+    res.status(201).json({
+        message: "user successful created"
+    })
  } 
  catch (error) {
         res.status(500).json({ message: (error as Error).message });

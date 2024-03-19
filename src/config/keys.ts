@@ -1,4 +1,7 @@
-import dotenv from "dotenv"
+const config = {
+    jwtSecret: "yvan2323",
+    
+};
 
-dotenv.config()
+export default config
 

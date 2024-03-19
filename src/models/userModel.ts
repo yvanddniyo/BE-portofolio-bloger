@@ -1,5 +1,4 @@
   import mongoose from "mongoose"
-  import bcrypt from "bcrypt"
 
   const userContainer = new mongoose.Schema({
     username: {
@@ -12,11 +11,7 @@
   },
     password: {
       type: String, 
-      requie: true
-  },
-  token:{
-      type:String,
-      required: true
+      require: true
   },
   role: {
     type: String,
@@ -29,4 +24,6 @@
   })
 
 
-  export default mongoose.model("Users", userContainer)
+const userModel = mongoose.model("Users", userContainer)
+
+export default userModel

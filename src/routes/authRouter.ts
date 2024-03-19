@@ -1,8 +1,14 @@
-import express from 'express'
-const routerAuth = express.Router();
-import loginUser from '../controller/authController';
-// import authenticateAndAuthorize from '../controller/authController';
+import express from 'express';
+import { registerUser, loginUser } from '../controller/authController';
+// import { authMiddleware, adminMiddleware } from '../middlewares/adminAccess';
 
-routerAuth.post('/auth/login', loginUser);
+const router = express.Router();
 
-export default routerAuth
+router.post('/auth/register', registerUser);
+router.post('/auth/login', loginUser);
+
+// router.get('/auth/admin', authMiddleware, adminMiddleware, (req, res) => {
+//   res.send('Admin Dashboard');
+// });
+
+export default router;

@@ -1,5 +1,6 @@
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
+import { createValidate, updateValidate } from "../validate/validateBlog"
 
 // Get all posts
 

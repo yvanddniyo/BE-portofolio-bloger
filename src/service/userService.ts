@@ -6,17 +6,16 @@ const userServices = {
 viewAllUser : async () =>{
     return await Users.find()
   },
-createUser : async (username: string, email: string, password: string, 
-    token: string) => {
+createUser : async (username: string, email: string, password: string) => {
     const check  = await Users.findOne({username})
      if(check) {
         throw new Error("User already exist.");
      }
      else {
-        const token = jwt.sign({name: username}, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
-         const hashed = await hashedPassword(password, 10)
-         const newUser = new Users({username, email, password:hashed, token:token})
-         return newUser.save()
+        // const token = jwt.sign({name: username}, "process.env.JWT_TOKEN")
+        //  const hashed = await hashedPassword(password, 10)
+        //  const newUser = new Users({username, email, password:hashed})
+        //  return newUser.save();
      }
   },
   

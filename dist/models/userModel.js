@@ -15,11 +15,7 @@ const userContainer = new mongoose_1.default.Schema({
     },
     password: {
         type: String,
-        requie: true
-    },
-    token: {
-        type: String,
-        required: true
+        require: true
     },
     role: {
         type: String,
@@ -29,4 +25,5 @@ const userContainer = new mongoose_1.default.Schema({
 }, {
     timestamps: true
 });
-exports.default = mongoose_1.default.model("Users", userContainer);
+const userModel = mongoose_1.default.model("Users", userContainer);
+exports.default = userModel;

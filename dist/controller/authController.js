@@ -12,18 +12,94 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const authService_1 = __importDefault(require("../service/authService"));
-const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.loginUser = exports.registerUser = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const userModel_1 = __importDefault(require("../models/userModel"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const validate_1 = require("../validate/validate");
+dotenv_1.default.config();
+const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            throw new Error("Username and password are required.");
+        const { error } = (0, validate_1.registerValidate)(req.body);
+        if (error) {
+            res.status(400).send(error.details[0].message);
         }
-        const eachUser = yield authService_1.default.loginUser(username, password);
-        res.status(201).json(eachUser);
+        else {
+            const existEmail = yield userModel_1.default.findOne({ email: req.body.email });
+            if (existEmail) {
+                res.status(400).json({ message: "email already exists" });
+            }
+            else {
+                const salt = yield bcrypt_1.default.genSalt(10);
+                const hashedPassword = yield bcrypt_1.default.hash(req.body.password, salt);
+                const user = new userModel_1.default({
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: hashedPassword,
+                    role: req.body.role
+                });
+                const newUser = yield user.save();
+                res.status(200).json({
+                    message: "user successfully created.",
+                });
+            }
+        }
     }
-    catch (error) {
-        res.status(500).json({ message: error.message });
+    catch (err) {
+        res.status(500).send(err.message);
     }
 });
-exports.default = loginUser;
+exports.registerUser = registerUser;
+const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { error } = (0, validate_1.loginValidate)(req.body);
+        if (error) {
+            res.status(400).send(error.details[0].message);
+            return;
+        }
+        const user = yield userModel_1.default.findOne({ email: req.body.email });
+        if (!user) {
+            res.status(400).json({ message: "Email doesn't exist in our DB" });
+            return;
+        }
+        if (!user.password) {
+            res.status(400).json({ message: "Password not found for the user" });
+            return;
+        }
+        const validPassword = yield bcrypt_1.default.compare(req.body.password, user.password);
+        if (!validPassword) {
+            res.status(400).send("Password is invalid");
+            return;
+        }
+        // Include the user's role in the JWT token payload
+        const payload = {
+            id: user._id,
+            email: user.email,
+            role: user.role
+        };
+        const token = jsonwebtoken_1.default.sign(payload, `${process.env.JWT_TOKEN}`);
+        res.header('auth-token', token).send(token);
+    }
+    catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+exports.loginUser = loginUser;
+// // authController.ts
+// import { Request, Response } from "express";
+// import { loginUser } from "../service/authService";
+// export const login = async (req: Request, res: Response) => {
+//     try {
+//         const { email, password } = req.body;
+//         // Check if email and password are provided
+//         if (!email || !password) {
+//             return res.status(400).json({ message: "Email and password are required." });
+//         }
+//         const result = await loginUser.login(email, password);
+//         // Send token in response header
+//         res.header('auth-token', result.token).json(result);
+//     } catch (error) {
+//         res.status(500).json({ message: (error as Error).message });
+//     }
+// };

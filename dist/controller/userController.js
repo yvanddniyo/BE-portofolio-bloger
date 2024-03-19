@@ -24,9 +24,11 @@ const viewAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username, email, password, token } = req.body;
-        const eachUser = yield userService_1.default.createUser(username, email, password, token);
-        res.status(201).json(eachUser);
+        const { username, email, password } = req.body;
+        const eachUser = yield userService_1.default.createUser(username, email, password);
+        res.status(201).json({
+            message: "user successful created"
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

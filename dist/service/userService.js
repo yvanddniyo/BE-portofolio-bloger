@@ -13,22 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userModel_1 = __importDefault(require("../models/userModel"));
-const hashPassoword_1 = require("../utls/hashPassoword");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userServices = {
     viewAllUser: () => __awaiter(void 0, void 0, void 0, function* () {
         return yield userModel_1.default.find();
     }),
-    createUser: (username, email, password, token) => __awaiter(void 0, void 0, void 0, function* () {
+    createUser: (username, email, password) => __awaiter(void 0, void 0, void 0, function* () {
         const check = yield userModel_1.default.findOne({ username });
         if (check) {
             throw new Error("User already exist.");
         }
         else {
-            const token = jsonwebtoken_1.default.sign({ name: username }, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
-            const hashed = yield (0, hashPassoword_1.hashedPassword)(password, 10);
-            const newUser = new userModel_1.default({ username, email, password: hashed, token: token });
-            return newUser.save();
+            // const token = jwt.sign({name: username}, "process.env.JWT_TOKEN")
+            //  const hashed = await hashedPassword(password, 10)
+            //  const newUser = new Users({username, email, password:hashed})
+            //  return newUser.save();
         }
     }),
     singleUser: (id) => __awaiter(void 0, void 0, void 0, function* () {
