@@ -13,6 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogService_1 = __importDefault(require("../service/blogService"));
+const validateBlog_1 = require("../validate/validateBlog");
+const claudinary_1 = __importDefault(require("../helper/claudinary"));
 // Get all posts
 const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,8 +27,24 @@ const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 /* create the a blogs */
 const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const file = req.file;
     try {
-        const { title, image, content } = req.body;
+        const { error, value } = validateBlog_1.blogSchema.validate({
+            title: req.body.title,
+            description: req.body.description,
+            image: file ? file.path : undefined,
+        });
+        if (error) {
+            return res.status(400).json({
+                status: "Error",
+                message: error.details[0].message,
+            });
+        }
+        const result = yield (0, claudinary_1.default)(file, res);
+        const { title, image, content } = value;
+        title: title.value;
+        image: result;
+        content: content.value;
         const eachBlog = yield blogService_1.default.createBlog(title, image, content);
         res.status(201).json(eachBlog);
     }

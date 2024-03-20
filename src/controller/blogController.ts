@@ -1,6 +1,7 @@
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
-import { createValidate, updateValidate } from "../validate/validateBlog"
+import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
+import uploadFile from "../helper/claudinary"
 
 // Get all posts
 
@@ -17,12 +18,30 @@ const viewAllBlog = async(req:Request, res:Response) => {
 /* create the a blogs */
 
 const createBlog = async(req:Request, res:Response) => {
+    
+    const file =  req.file
     try {
-    const {title, image, content} = req.body
+    const { error, value } = blogSchema.validate({
+        title: req.body.title,
+        description: req.body.description,
+        image: file ? file.path : undefined,
+        });
+        if (error) {
+            return res.status(400).json({
+              status: "Error",
+              message: error.details[0].message,
+            });
+          }
+        const result = await uploadFile(file!, res);
+        const {title, image, content} = value
+        title: title.value
+        image: result
+        content: content.value
+
     const eachBlog =  await blogService.createBlog(title, image, content);
     res.status(201).json(eachBlog)
- } 
- catch (error) {
+   } 
+    catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
 } 

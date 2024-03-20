@@ -1,8 +1,7 @@
 import Joi from 'joi'
  export const registerValidate = (data: string) => {
 
-// Validation schema
-const schema = Joi.object({
+ const schema = Joi.object({
     username: Joi.string()
     .min(6)
     .required(),
@@ -19,8 +18,7 @@ const schema = Joi.object({
 }
  export const  loginValidate = (data: string) => {
 
-// Validation schema
-const schema = Joi.object({
+ const schema = Joi.object({
     email: Joi.string()
     .min(6)
     .required()
@@ -31,8 +29,18 @@ const schema = Joi.object({
 });
  return schema.validate(data)
 }
+ export const  createValidate = (data: string) => {
 
-// export default {
-//     registerValidate,
-//     loginValidate
-// }
+ const schema = Joi.object({
+    title: Joi.string()
+    .min(6)
+    .required(),
+    image: Joi.string()
+    .optional(),
+    content: Joi.string()
+    .required()
+    .min(10)
+});
+ return schema.validate(data)
+}
+

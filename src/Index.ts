@@ -11,7 +11,7 @@ import routerUser from './routes/userRoute';
 import routerAuth from './routes/authRouter';
 const PORT = process.env.PORT || 5000;
 
-import upload from './multer';
+import upload from './helper/multer';
 import cloudinary from 'cloudinary';
 import fs from 'fs'
 
