@@ -41,7 +41,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 });
                 const newUser = yield user.save();
                 res.status(200).json({
-                    message: "user successfully created.",
+                    message: "user successfully created an account.",
                 });
             }
         }

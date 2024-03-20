@@ -4,8 +4,7 @@ import { registerUser, loginUser } from '../controller/authController';
 
 const router = express.Router();
 
-router.post('/auth/register', registerUser);
-router.post('/auth/login', loginUser);
+
 
 // router.get('/auth/admin', authMiddleware, adminMiddleware, (req, res) => {
 //   res.send('Admin Dashboard');

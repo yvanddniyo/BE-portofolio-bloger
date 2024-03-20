@@ -13,11 +13,14 @@ const likeRouter_1 = __importDefault(require("./routes/likeRouter"));
 const queryRoute_1 = __importDefault(require("./routes/queryRoute"));
 const userRoute_1 = __importDefault(require("./routes/userRoute"));
 const authRouter_1 = __importDefault(require("./routes/authRouter"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const PORT = process.env.PORT || 5000;
 // connect to the mongoDB
 (0, db_1.default)();
 // middlewares
 app.use(express_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.json());
 /*new routes*/
 app.use('/api/v1', blogerRoute_1.default);
 app.use('/api/v1', commentRoute_1.default);

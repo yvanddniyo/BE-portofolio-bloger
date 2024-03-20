@@ -29,7 +29,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
                 });
                 const newUser = await user.save();
                 res.status(200).json({ 
-                    message: "user successfully created.",
+                    message: "user successfully created an account.",
                  });
             }
         }

@@ -9,6 +9,7 @@ import routerLikes from './routes/likeRouter';
 import routerQuery from './routes/queryRoute';
 import routerUser from './routes/userRoute';
 import routerAuth from './routes/authRouter';
+import bodyParser from 'body-parser';
 const PORT = process.env.PORT || 5000;
 
 import upload from './helper/multer';
@@ -20,6 +21,8 @@ connectDB()
 
 // middlewares
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 /*new routes*/
 app.use('/api/v1', router);

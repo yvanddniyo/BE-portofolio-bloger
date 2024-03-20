@@ -1,23 +1,24 @@
-import multer from "multer";
-import path from "path";
+import multer from 'multer';
+import path from 'path';
 
-const storage = multer.diskStorage({});
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'assets/'); // Specify the directory where you want to store the uploaded files temporarily
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`); // Generate a unique filename for the uploaded file
+  },
+});
 
-const fileFilter = (req: Express.Request, file: Express.Multer.File, cb: multer.FileFilterCallback): void => {
-  const extension = path.extname(file.originalname).toLowerCase();
-
-  if (!(extension === '.jpg' || extension === '.jpeg' || extension === '.png')) {
-    cb(new Error('Wrong format for file'));
-    return;
+const fileFilter = (req: any, file: any, cb: any) => {
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']; // Specify the allowed file types
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false); // Reject the file if it doesn't match the allowed types
   }
-
-  cb(null, true);
 };
 
-
-const upload = multer({
-    storage,
-    fileFilter
-  });
+const upload = multer({ storage, fileFilter });
 
 export default upload;

@@ -1,5 +1,6 @@
 import userServices from "../service/userService";
 import { Request, Response } from "express";
+import { userUpdateValidate } from "../validate/validate";
 
 
 const viewAllUser = async (req: Request, res: Response) => {
@@ -39,8 +40,14 @@ const updateUser = async (req:Request, res:Response) => {
     try {
         const id = req.params.id
         const {username, email, password} = req.body
+        const {error} = userUpdateValidate({username, email, password})
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
         const updateUser = await userServices.updateUser(id, username, email, password);
-        res.json(updateUser)
+        res.json({
+            message: "User has been updated successfully"
+        })
 
         if (!updateUser) {
             console.error(`User with ID ${req.params.id} not found.`);
