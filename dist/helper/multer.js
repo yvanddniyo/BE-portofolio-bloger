@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const multer_1 = __importDefault(require("multer"));
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'assets/'); // Specify the directory where you want to store the uploaded files temporarily
+        cb(null, 'uploads/'); // Specify the directory where you want to store the uploaded files temporarily
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`); // Generate a unique filename for the uploaded file
