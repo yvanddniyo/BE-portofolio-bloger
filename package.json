@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon dist/index.js",
-    "test": "jest --verbose --coverage",
-    "ts-coverage": "typescript-coverage-report",
-    "coverage": "nyc npm run test"
+    "test": "jest --verbose "
   },
   "jest": {
     "preset": "ts-jest",

@@ -17,7 +17,7 @@ const validate_1 = require("../validate/validate");
 const viewAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield userService_1.default.viewAllUser();
-        res.status(201).json(user);
+        res.status(200).json(user);
     }
     catch (error) {
         res.status(500).json({ message: error.message });

@@ -9,7 +9,7 @@ import { checkExistingUsers } from '../middlewares/isUserExist';
 
 
 routerUser.get('/users',
-  authenticateToken, 
+  // authenticateToken, 
   userController.viewAllUser
 );
   routerUser.post('/auth/register', 
@@ -19,8 +19,12 @@ routerUser.get('/users',
   loginUser
 );
 routerUser.get('/users/:id',
+<<<<<<< HEAD
   authenticateUser, 
   checkExistingUsers,
+=======
+  // authenticateUser, 
+>>>>>>> ft-testing
   userController.singleUser
 );
 routerUser.patch('/users/:id', 

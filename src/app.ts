@@ -25,15 +25,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 /*new routes*/
-app.use('/api/v1', router)
-app.use('/api/v1', routerComment)
-app.use('/api/v1', routerLikes)
-app.use('/api/v1', routerQuery)
+// app.use('/api/v1', router)
+// app.use('/api/v1', routerComment)
+// app.use('/api/v1', routerLikes)
+// app.use('/api/v1', routerQuery)
 app.use('/api/v1', routerUser)
-app.use('/api/v1', routerAuth)
+// app.use('/api/v1', routerAuth)
 
-// requesting image
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-})
+export default app
