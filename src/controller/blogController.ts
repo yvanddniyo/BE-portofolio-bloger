@@ -1,6 +1,6 @@
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
-import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
+// import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
 import uploadFile from "../helper/claudinary"
 import { createValidate, updateValidate } from "../validate/validate"
 // import { uploadFile } from "../helper/claudinary"
@@ -84,7 +84,6 @@ const updateBlog = async (req: Request, res: Response) => {
         return res.status(404).json({ message: 'Blog not found.' });
       }
   
-      // Return a success message instead of the updated blog data
       return res.status(200).json({ message: 'Blog updated successfully.' });
     } catch (error) {
       console.error(`Error updating blog with ID ${req.params.id}:`, error);

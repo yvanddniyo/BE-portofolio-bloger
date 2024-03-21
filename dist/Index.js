@@ -15,6 +15,9 @@ const userRoute_1 = __importDefault(require("./routes/userRoute"));
 const authRouter_1 = __importDefault(require("./routes/authRouter"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const PORT = process.env.PORT || 5000;
+// import upload from './helper/multer';
+// import cloudinary from 'cloudinary';
+// import fs from 'fs'
 // connect to the mongoDB
 (0, db_1.default)();
 // middlewares

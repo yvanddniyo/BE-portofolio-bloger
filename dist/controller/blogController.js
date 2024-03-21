@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogService_1 = __importDefault(require("../service/blogService"));
+// import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
 const claudinary_1 = __importDefault(require("../helper/claudinary"));
 const validate_1 = require("../validate/validate");
 // import { uploadFile } from "../helper/claudinary"
@@ -82,7 +83,6 @@ const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             console.error(`Blog with ID ${req.params.id} not found.`);
             return res.status(404).json({ message: 'Blog not found.' });
         }
-        // Return a success message instead of the updated blog data
         return res.status(200).json({ message: 'Blog updated successfully.' });
     }
     catch (error) {

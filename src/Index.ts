@@ -12,9 +12,9 @@ import routerAuth from './routes/authRouter';
 import bodyParser from 'body-parser';
 const PORT = process.env.PORT || 5000;
 
-import upload from './helper/multer';
-import cloudinary from 'cloudinary';
-import fs from 'fs'
+// import upload from './helper/multer';
+// import cloudinary from 'cloudinary';
+// import fs from 'fs'
 
 // connect to the mongoDB
 connectDB()
