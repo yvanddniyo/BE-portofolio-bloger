@@ -3,7 +3,11 @@ import path from 'path';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+<<<<<<< HEAD
     cb(null, 'assets/'); 
+=======
+    cb(null, 'uploads/'); // Specify the directory where you want to store the uploaded files temporarily
+>>>>>>> ft-auth
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`); 

@@ -4,6 +4,7 @@ import blogController from'../controller/blogController';
 import authenticateToken from '../middlewares/tokenAuth';
 import authenticateUser from '../middlewares/userAccess';
 import upload from '../helper/multer';
+import { checkExistingBlog } from '../middlewares/isBlogExist';
 
 router.get('/blogs',
  authenticateUser,
@@ -19,11 +20,13 @@ router.get('/blogs/:id',
 );
 router.patch('/blogs/:id', 
     upload.single('image'), 
-    authenticateToken,  
+    authenticateToken,
+    checkExistingBlog,  
     blogController.updateBlog
 );
 router.delete('/blogs/:id',
-    authenticateToken, 
+    authenticateToken,
+    checkExistingBlog, 
     blogController.deleteBlog
 );
 

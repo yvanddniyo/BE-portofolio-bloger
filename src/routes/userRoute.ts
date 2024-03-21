@@ -4,6 +4,7 @@ import userController from '../controller/userController';
 import authenticateUser from '../middlewares/userAccess';
 import authenticateToken from '../middlewares/tokenAuth';
 import { registerUser, loginUser } from '../controller/authController';
+import { checkExistingUsers } from '../middlewares/isUserExist';
 
 
 
@@ -19,10 +20,12 @@ routerUser.get('/users',
 );
 routerUser.get('/users/:id',
   authenticateUser, 
+  checkExistingUsers,
   userController.singleUser
 );
 routerUser.patch('/users/:id', 
-  authenticateToken, 
+  authenticateToken,
+  checkExistingUsers, 
   userController.updateUser
 );
 routerUser.delete('/users/:id', 
