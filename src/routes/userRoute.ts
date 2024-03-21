@@ -8,7 +8,7 @@ import { registerUser, loginUser } from '../controller/authController';
 
 
 routerUser.get('/users',
-  authenticateToken, 
+  // authenticateToken, 
   userController.viewAllUser
 );
   routerUser.post('/auth/register', 
@@ -18,7 +18,7 @@ routerUser.get('/users',
   loginUser
 );
 routerUser.get('/users/:id',
-  authenticateUser, 
+  // authenticateUser, 
   userController.singleUser
 );
 routerUser.patch('/users/:id', 

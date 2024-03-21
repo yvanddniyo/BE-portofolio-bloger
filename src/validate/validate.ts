@@ -17,7 +17,9 @@ interface BlogData {
     password: Joi.string()
     .min(6)
     .required(),
-    role: Joi.string()
+    role: Joi.string().
+    optional()
+  
 });
  return schema.validate(data)
 }

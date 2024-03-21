@@ -6,7 +6,7 @@ import { userUpdateValidate } from "../validate/validate";
 const viewAllUser = async (req: Request, res: Response) => {
   try{
     const user = await userServices.viewAllUser()
-    res.status(201).json(user)
+    res.status(200).json(user)
   } catch(error) {
     res.status(500).json({ message: (error as Error).message });
   }
@@ -15,6 +15,7 @@ const viewAllUser = async (req: Request, res: Response) => {
 const createUser = async(req:Request, res:Response) => {
     try {
     const {username, email, password} = req.body
+    
     const eachUser =  await userServices.createUser(username, email, password);
     res.status(201).json({
         message: "user successful created"
