@@ -33,6 +33,9 @@ const options: swaggerJsdoc.Options ={
             {
                 url: 'http://localhost:5000'
             },
+            {
+                url: 'https://be-portofolio-bloger.onrender.com'
+            },
         ], 
          
     },
