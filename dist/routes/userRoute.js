@@ -171,5 +171,7 @@ routerUser.post('/auth/register', authController_1.registerUser);
 routerUser.post('/auth/login', authController_1.loginUser);
 routerUser.get('/users/:id', userAccess_1.default, isUserExist_1.checkExistingUsers, userAccess_1.default, userController_1.default.singleUser);
 routerUser.patch('/users/:id', tokenAuth_1.default, isUserExist_1.checkExistingUsers, userController_1.default.updateUser);
-routerUser.delete('/users/:id', tokenAuth_1.default, userController_1.default.deleteUser);
+routerUser.delete('/users/:id', 
+// authenticateToken, 
+userController_1.default.deleteUser);
 exports.default = routerUser;

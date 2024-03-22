@@ -1,13 +1,10 @@
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
-// import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
 import uploadFile from "../helper/claudinary"
 import { createValidate, updateValidate } from "../validate/validate"
-// import { uploadFile } from "../helper/claudinary"
-// import uploadFile from "../helper/claudinary"
+
 
 // Get all posts
-
 
 const viewAllBlog = async(req:Request, res:Response) => {
     try {

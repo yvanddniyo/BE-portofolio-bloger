@@ -190,12 +190,16 @@ routerUser.get('/users/:id',
   userController.singleUser
 );
 routerUser.patch('/users/:id', 
+<<<<<<< HEAD
   authenticateToken,
   checkExistingUsers, 
+=======
+  // authenticateToken, 
+>>>>>>> ft-testing
   userController.updateUser
 );
 routerUser.delete('/users/:id', 
-  authenticateToken, 
+  // authenticateToken, 
   userController.deleteUser
 );
 
