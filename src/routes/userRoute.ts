@@ -22,11 +22,11 @@ routerUser.get('/users/:id',
   userController.singleUser
 );
 routerUser.patch('/users/:id', 
-  authenticateToken, 
+  // authenticateToken, 
   userController.updateUser
 );
 routerUser.delete('/users/:id', 
-  authenticateToken, 
+  // authenticateToken, 
   userController.deleteUser
 );
 

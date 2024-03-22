@@ -13,12 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-// import app from '../app';
 const db_1 = __importDefault(require("../../config/db"));
 const app_1 = __importDefault(require("../../app"));
-//  const app = express()
-// --coverage
-//  dotenv.config()
 describe('Data connection', () => {
     test('should connect to the database', () => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, db_1.default)();
@@ -30,20 +26,46 @@ describe('GET /', () => {
         expect(response.statusCode).toBe(200);
     }));
 });
-describe("POST /", () => {
-    test("should return status 201 for user created", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app_1.default).post('/api/v1/auth/register').send({
-            username: "testFour",
-            email: 'testFour@gmail.com',
-            password: 'testFour'
+describe("create new user POST /api/v1/auth/users", () => {
+    it("should return status 201 for user created", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app_1.default)
+            .post('/api/v1/auth/users')
+            .send({
+            username: "testSixx",
+            email: 'testSixx@gmail.com',
+            password: 'testSixx'
         });
         expect(response.statusCode).toBe(201);
     }));
 });
-describe("GET /:id", () => {
-    test("should return status 200 for retrieving a user", () => __awaiter(void 0, void 0, void 0, function* () {
-        const userId = "65f98774bb89bde4a2836058";
+let stringT;
+describe("login in admin as POST /", () => {
+    it("should return status 201 or user", () => __awaiter(void 0, void 0, void 0, function* () {
+        const login = yield (0, supertest_1.default)(app_1.default)
+            .post("/api/v1/auth/login")
+            .send({
+            email: "adminthree@gmail.com",
+            password: "adminthree"
+        });
+        stringT = login.body.token;
+        console.log(`my token is this: ${stringT}`);
+        expect(login.status).toBe(200);
+        // const token = await login;
+        console.log(`my token is this: ${login.headers}`);
+    }));
+});
+describe("get user by id GET /api/v1/users/:id", () => {
+    it("should return status 200 for retrieving a user", () => __awaiter(void 0, void 0, void 0, function* () {
+        const userId = "65fcb7eb669ca3604c8b60b4";
         const user = yield (0, supertest_1.default)(app_1.default).get(`/api/v1/users/${userId}`);
+        expect(user.statusCode).toBe(200);
+    }));
+});
+describe("DELETE /api/v1/users/:id", () => {
+    it("should return status 200 for deleting a user", () => __awaiter(void 0, void 0, void 0, function* () {
+        const userId = "65fcb7eb669ca3604c8b60b4";
+        const user = yield (0, supertest_1.default)(app_1.default)
+            .del(`/api/v1/users/${userId}`);
         expect(user.statusCode).toBe(200);
     }));
 });

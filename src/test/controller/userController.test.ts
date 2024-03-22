@@ -1,13 +1,8 @@
- import dotenv from  "dotenv"
- import supertest from "supertest"
 import request from 'supertest';
-// import app from '../app';
- import connectDB from "../../config/db"
- import express  from "express"
+import connectDB from "../../config/db";
 import app from "../../app";
-//  const app = express()
-// --coverage
-//  dotenv.config()
+import { Express, Response , Request} from "express"
+
 
  describe('Data connection', () => {
     test('should connect to the database', async() => {
@@ -23,21 +18,52 @@ import app from "../../app";
   });
  })
 
-describe("POST /", () => {
-  test("should return status 201 for user created", async () => {
-      const response = await request(app).post('/api/v1/auth/register').send({
-          username: "testFour",
-          email: 'testFour@gmail.com',
-          password: 'testFour'
+describe("create new user POST /api/v1/auth/users", () => {
+  it("should return status 201 for user created", async () => {
+      const response = await request(app)
+      .post('/api/v1/auth/users')
+      .send({
+          username: "testSixx",
+          email: 'testSixx@gmail.com',
+          password: 'testSixx'
       });
       expect(response.statusCode).toBe(201);
   })
 })
 
-describe("GET /:id", () => {
-  test("should return status 200 for retrieving a user", async () => {
-      const userId = "65f98774bb89bde4a2836058";
+let stringT: string;
+
+ describe("login in admin as POST /", () => {
+   it("should return status 201 or user", async() => {
+    const login = await request(app)
+    .post("/api/v1/auth/login")
+    .send({
+      email:  "adminthree@gmail.com",
+      password : "adminthree"
+    });
+    stringT = login.body.token
+    console.log(`my token is this: ${stringT}`)
+    expect(login.status).toBe(200);
+    // const token = await login;
+    console.log(`my token is this: ${login.headers}`);
+  })
+ })
+
+describe("get user by id GET /api/v1/users/:id", () => {
+  it("should return status 200 for retrieving a user", async () => {
+      const userId = "65fcb7eb669ca3604c8b60b4";
       const user = await request(app).get(`/api/v1/users/${userId}`);
       expect(user.statusCode).toBe(200);
   })
 })
+
+describe("DELETE /api/v1/users/:id", () => {
+  it("should return status 200 for deleting a user",  async() => {
+      const userId = "65fcb7eb669ca3604c8b60b4";
+      const user = await request(app)
+      .del(`/api/v1/users/${userId}`)
+
+      expect(user.statusCode).toBe(200)
+  });
+});
+
