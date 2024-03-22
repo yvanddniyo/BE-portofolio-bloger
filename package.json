@@ -5,12 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "dev": "nodemon dist/index.js",
-<<<<<<< HEAD
-    "test": "jest --verbose --coverage"
-=======
-    "test": "jest --coverage"
->>>>>>> ft-testing
+    "dev": "nodemon dist/index.js"
+    
   },
   "jest": {
     "preset": "ts-jest",
