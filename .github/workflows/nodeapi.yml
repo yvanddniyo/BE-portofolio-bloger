@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Change this to the Node.js version you want to use
+          node-version: "20"
 
       - name: Install Dependencies
         run: npm ci
