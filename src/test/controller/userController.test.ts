@@ -44,7 +44,6 @@ let stringT: string;
     stringT = login.body.token
     console.log(`my token is this: ${stringT}`)
     expect(login.status).toBe(200);
-    // const token = await login;
     console.log(`my token is this: ${login.headers}`);
   })
  })
@@ -59,11 +58,11 @@ describe("get user by id GET /api/v1/users/:id", () => {
 
 describe("DELETE /api/v1/users/:id", () => {
   it("should return status 200 for deleting a user",  async() => {
-      const userId = "65fcb7eb669ca3604c8b60b4";
+      const userId = "65fcad788f89b5ad6761ebdc";
       const user = await request(app)
       .del(`/api/v1/users/${userId}`)
 
       expect(user.statusCode).toBe(200)
   });
-});
+})
 
