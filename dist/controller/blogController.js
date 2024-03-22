@@ -30,8 +30,6 @@ const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 /* create the a blogs */
 const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //     console.log('Request headers:', req.headers);
-    //   console.log('Request body:', req.body);
     console.log('Request file:', req.file);
     const file = req.file;
     try {

@@ -38,25 +38,63 @@ interface BlogData {
 }
 export const createValidate = (data: any) => {
     const schema = Joi.object({
-      title: Joi.string().min(6).required(),
-      image: Joi.string().optional(),
-      content: Joi.string().required().min(10),
+      title: Joi.string()
+      .min(6)
+      .required(),
+      image: Joi.string()
+      .optional(),
+      content: Joi.string()
+      .required()
+      .min(10),
     });
     return schema.validate(data);
   }
 export const updateValidate = (data: any) => {
     const schema = Joi.object({
-      title: Joi.string().min(6).required(),
-      image: Joi.string().required(),
-      content: Joi.string().required().min(10),
+      title: Joi.string()
+      .min(6)
+      .required(),
+      image: Joi.string()
+      .required(),
+      content: Joi.string()
+      .required()
+      .min(10),
     });
     return schema.validate(data);
   }
 export const userUpdateValidate = (data: any) => {
     const schema = Joi.object({
-      username: Joi.string().min(4).optional(),
-      email: Joi.string().optional(),
-      password: Joi.string().optional().min(10),
+      username: Joi.string()
+      .min(4)
+      .optional(),
+      email: Joi.string()
+      .optional(),
+      password: Joi.string()
+      .optional()
+      .min(10),
+    });
+    return schema.validate(data);
+  }
+export const commentsValidate = (data: any) => {
+    const schema = Joi.object({
+      name: Joi.string().min(3)
+      .required(),
+      content: Joi.string()
+      .min(6)
+      .required(),
+    });
+    return schema.validate(data);
+  }
+export const queryValidate = (data: any) => {
+    const schema = Joi.object({
+      name: Joi.string().min(5)
+      .required(),
+      email: Joi.string()
+      .email()
+      .required(),
+      message: Joi.string()
+      .min(7)
+      .required(),
     });
     return schema.validate(data);
   }

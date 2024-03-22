@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const queryService_1 = __importDefault(require("../service/queryService"));
+const validate_1 = require("../validate/validate");
 const viewAllQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = yield queryService_1.default.viewAllQuery();
@@ -25,6 +26,10 @@ const viewAllQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 const createQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, message } = req.body;
+        const { error } = (0, validate_1.queryValidate)({ name, email, message });
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
         const eachquery = yield queryService_1.default.createQuery(name, email, message);
         res.status(201).json(eachquery);
     }
