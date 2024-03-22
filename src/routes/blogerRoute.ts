@@ -121,30 +121,25 @@ router.get('/blogs', authenticateUser,  blogController.viewAllBlog);
  */
 
 router.post('/blogs', 
-<<<<<<< HEAD
+    authenticateToken,
     upload.single('image'), 
     blogController.createBlog
 );
-router.get('/blogs/:id',  
-    authenticateUser, 
-    blogController.singleBlog
-);
-router.patch('/blogs/:id', 
-    upload.single('image'), 
-    authenticateToken,
-    checkExistingBlog,  
-    blogController.updateBlog
-);
-router.delete('/blogs/:id',
-    authenticateToken,
-    checkExistingBlog, 
-    blogController.deleteBlog
-=======
- authenticateToken, 
- upload.single('image'), 
- blogController.createBlog
->>>>>>> ft-swagger
-);
+// router.get('/blogs/:id',  
+//     authenticateUser, 
+//     blogController.singleBlog
+// );
+// router.patch('/blogs/:id', 
+//     upload.single('image'), 
+//     authenticateToken,
+//     checkExistingBlog,  
+//     blogController.updateBlog
+// );
+// router.delete('/blogs/:id',
+//     authenticateToken,
+//     checkExistingBlog, 
+//     blogController.deleteBlog
+// );
 
 /**
  * @swagger

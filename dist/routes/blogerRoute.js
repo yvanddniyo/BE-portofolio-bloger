@@ -9,7 +9,6 @@ const blogController_1 = __importDefault(require("../controller/blogController")
 const tokenAuth_1 = __importDefault(require("../middlewares/tokenAuth"));
 const userAccess_1 = __importDefault(require("../middlewares/userAccess"));
 const multer_1 = __importDefault(require("../helper/multer"));
-const isBlogExist_1 = require("../middlewares/isBlogExist");
 /**
  * @swagger
  * tags:
@@ -117,10 +116,22 @@ router.get('/blogs', userAccess_1.default, blogController_1.default.viewAllBlog)
  *           type: string
  *           format: date-time
  */
-router.post('/blogs', multer_1.default.single('image'), blogController_1.default.createBlog);
-router.get('/blogs/:id', userAccess_1.default, blogController_1.default.singleBlog);
-router.patch('/blogs/:id', multer_1.default.single('image'), tokenAuth_1.default, isBlogExist_1.checkExistingBlog, blogController_1.default.updateBlog);
-router.delete('/blogs/:id', tokenAuth_1.default, isBlogExist_1.checkExistingBlog, blogController_1.default.deleteBlog);
+router.post('/blogs', tokenAuth_1.default, multer_1.default.single('image'), blogController_1.default.createBlog);
+// router.get('/blogs/:id',  
+//     authenticateUser, 
+//     blogController.singleBlog
+// );
+// router.patch('/blogs/:id', 
+//     upload.single('image'), 
+//     authenticateToken,
+//     checkExistingBlog,  
+//     blogController.updateBlog
+// );
+// router.delete('/blogs/:id',
+//     authenticateToken,
+//     checkExistingBlog, 
+//     blogController.deleteBlog
+// );
 /**
  * @swagger
  * /api/v1/blogs/{id}:
