@@ -1,5 +1,4 @@
 name: Rest Api Node
-author: Yvan
 
 on:
   push:
