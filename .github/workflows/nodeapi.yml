@@ -1,26 +1,29 @@
 name: Rest Api Node
+author: Yvan
 
 on:
   push:
-    branches: -"main"
+    branches:
+      - main
   pull_request:
-    branches: -"main"
+    branches:
+      - main
 
-  jobs:
-    jobs1:
-      runs-on: "ubuntu-latest"
-    # Define the steps for this job
-  steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+jobs:
+  jobs1:
+    runs-on: ubuntu-latest
 
-    - name: Setup Node.js
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16" # Change this to the Node.js version you want to use
 
-    - name: Install Dependencies
-      run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
-    - name: Run Tests
-      run: npm test
+      - name: Run Tests
+        run: npm test
