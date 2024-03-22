@@ -66,7 +66,10 @@ import { checkExistingBlog } from '../middlewares/isBlogExist';
  *         description: Internal server error
  */
  
-router.get('/blogs', authenticateUser,  blogController.viewAllBlog);
+router.get('/blogs', 
+ authenticateUser,  
+ blogController.viewAllBlog
+);
 /**
  * @swagger
  * /api/v1/blogs:
@@ -125,21 +128,6 @@ router.post('/blogs',
     upload.single('image'), 
     blogController.createBlog
 );
-// router.get('/blogs/:id',  
-//     authenticateUser, 
-//     blogController.singleBlog
-// );
-// router.patch('/blogs/:id', 
-//     upload.single('image'), 
-//     authenticateToken,
-//     checkExistingBlog,  
-//     blogController.updateBlog
-// );
-// router.delete('/blogs/:id',
-//     authenticateToken,
-//     checkExistingBlog, 
-//     blogController.deleteBlog
-// );
 
 /**
  * @swagger
@@ -159,7 +147,10 @@ router.post('/blogs',
  *       200:
  *         description: Successful response
  */
-router.get('/blogs/:id', authenticateUser, blogController.singleBlog);
+router.get('/blogs/:id', 
+ authenticateUser, 
+ blogController.singleBlog
+);
 
 /**
  * @swagger
@@ -228,7 +219,11 @@ router.get('/blogs/:id', authenticateUser, blogController.singleBlog);
  *           type: string
  *           format: date-time
  */
-router.patch('/blogs/:id', upload.single('image'), authenticateToken, blogController.updateBlog);
+router.patch('/blogs/:id', 
+ authenticateToken, 
+ upload.single('image'), 
+ blogController.updateBlog
+);
 
 /**
  * @swagger
@@ -262,6 +257,9 @@ router.patch('/blogs/:id', upload.single('image'), authenticateToken, blogContro
  *       bearerFormat: JWT
  */
 
-router.delete('/blogs/:id', authenticateToken, blogController.deleteBlog);
+router.delete('/blogs/:id', 
+ authenticateToken, 
+ blogController.deleteBlog
+);
 
 export default router;

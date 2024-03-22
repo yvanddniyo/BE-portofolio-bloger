@@ -117,21 +117,6 @@ router.get('/blogs', userAccess_1.default, blogController_1.default.viewAllBlog)
  *           format: date-time
  */
 router.post('/blogs', tokenAuth_1.default, multer_1.default.single('image'), blogController_1.default.createBlog);
-// router.get('/blogs/:id',  
-//     authenticateUser, 
-//     blogController.singleBlog
-// );
-// router.patch('/blogs/:id', 
-//     upload.single('image'), 
-//     authenticateToken,
-//     checkExistingBlog,  
-//     blogController.updateBlog
-// );
-// router.delete('/blogs/:id',
-//     authenticateToken,
-//     checkExistingBlog, 
-//     blogController.deleteBlog
-// );
 /**
  * @swagger
  * /api/v1/blogs/{id}:
@@ -218,7 +203,7 @@ router.get('/blogs/:id', userAccess_1.default, blogController_1.default.singleBl
  *           type: string
  *           format: date-time
  */
-router.patch('/blogs/:id', multer_1.default.single('image'), tokenAuth_1.default, blogController_1.default.updateBlog);
+router.patch('/blogs/:id', tokenAuth_1.default, multer_1.default.single('image'), blogController_1.default.updateBlog);
 /**
  * @swagger
  * /api/v1/blogs/{id}:
