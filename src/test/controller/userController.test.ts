@@ -1,13 +1,8 @@
- import dotenv from  "dotenv"
- import supertest from "supertest"
 import request from 'supertest';
-// import app from '../app';
  import connectDB from "../../config/db"
  import express  from "express"
 import app from "../../app";
-//  const app = express()
-// --coverage
-//  dotenv.config()
+
 
  describe('Data connection', () => {
     test('should connect to the database', async() => {

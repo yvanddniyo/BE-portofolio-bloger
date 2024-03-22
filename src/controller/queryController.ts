@@ -1,6 +1,6 @@
 import queriesServices from "../service/queryService";
 import { Request, Response } from "express";
-
+import { queryValidate } from "../validate/validate";
 const viewAllQuery = async(req: Request, res: Response) => {
     try {
         const query = await queriesServices.viewAllQuery()
@@ -14,6 +14,10 @@ const viewAllQuery = async(req: Request, res: Response) => {
 const createQuery = async(req:Request, res:Response) => {
     try {
     const {name, email, message} = req.body
+    const { error } = queryValidate({ name, email, message });
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
     const eachquery =  await queriesServices.createQuery(name, email, message);
     res.status(201).json(eachquery)
  } 

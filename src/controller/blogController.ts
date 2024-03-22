@@ -22,8 +22,11 @@ const viewAllBlog = async(req:Request, res:Response) => {
 /* create the a blogs */
 
 const createBlog = async (req: Request, res: Response) => {
+<<<<<<< HEAD
   //   console.log('Request headers:', req.headers);
   // console.log('Request body:', req.body);
+=======
+>>>>>>> ft-swagger
   console.log('Request file:', req.file);
     const file = req.file;
     try {

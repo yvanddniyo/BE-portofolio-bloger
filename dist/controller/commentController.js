@@ -13,12 +13,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const commentService_1 = __importDefault(require("../service/commentService"));
+const blogComment_1 = __importDefault(require("../models/blogComment"));
+const validate_1 = require("../validate/validate");
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogId = req.params.id;
         const { name, content } = req.body;
+        const { error } = (0, validate_1.commentsValidate)({ name, content });
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
         const comments = yield commentService_1.default.createComment(blogId, name, content);
-        res.status(201).json(comments);
+        res.status(201).json({
+            comment: `${blogComment_1.default.length}`,
+            message: "comment successfully added"
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
