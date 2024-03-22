@@ -1,13 +1,7 @@
 import request from 'supertest';
-<<<<<<< HEAD
  import connectDB from "../../config/db"
  import express  from "express"
 import app from "../../app";
-=======
-import connectDB from "../../config/db";
-import app from "../../app";
-import { Express, Response , Request} from "express"
->>>>>>> ft-testing
 
 
  describe('Data connection', () => {

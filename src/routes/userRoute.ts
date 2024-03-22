@@ -172,7 +172,7 @@ routerUser.patch('/users/:id', authenticateToken, userController.updateUser);
 routerUser.delete('/users/:id', authenticateToken, userController.deleteUser);
 
 
-<<<<<<< HEAD
+
 routerUser.get('/users',
   authenticateToken, 
   userController.viewAllUser
@@ -190,12 +190,8 @@ routerUser.get('/users/:id',
   userController.singleUser
 );
 routerUser.patch('/users/:id', 
-<<<<<<< HEAD
   authenticateToken,
   checkExistingUsers, 
-=======
-  // authenticateToken, 
->>>>>>> ft-testing
   userController.updateUser
 );
 routerUser.delete('/users/:id', 
@@ -204,7 +200,5 @@ routerUser.delete('/users/:id',
 );
 
 
-export default routerUser
-=======
 export default routerUser;
->>>>>>> ft-swagger
+
