@@ -1,8 +1,13 @@
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
-import { createValidate, updateValidate } from "../validate/validateBlog"
+// import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
+import uploadFile from "../helper/claudinary"
+import { createValidate, updateValidate } from "../validate/validate"
+// import { uploadFile } from "../helper/claudinary"
+// import uploadFile from "../helper/claudinary"
 
 // Get all posts
+
 
 const viewAllBlog = async(req:Request, res:Response) => {
     try {
@@ -16,16 +21,26 @@ const viewAllBlog = async(req:Request, res:Response) => {
 
 /* create the a blogs */
 
-const createBlog = async(req:Request, res:Response) => {
+const createBlog = async (req: Request, res: Response) => {
+  console.log('Request file:', req.file);
+    const file = req.file;
     try {
-    const {title, image, content} = req.body
-    const eachBlog =  await blogService.createBlog(title, image, content);
-    res.status(201).json(eachBlog)
- } 
- catch (error) {
-        res.status(500).json({ message: (error as Error).message });
+      if (!file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+  
+      const imageUrl = await uploadFile(file);
+      const { title, content } = req.body;
+      const { error } = createValidate({ title, image: imageUrl, content });
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
     }
-} 
+      const eachBlog = await blogService.createBlog(title, imageUrl, content);
+      res.status(201).json(eachBlog);
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
+    }
+  }; 
 
 /* Get individual blog */
 
@@ -42,25 +57,38 @@ const singleBlog = async(req:Request, res:Response) => {
 
 /* Update your Blog */
 
-const updateBlog = async (req:Request, res:Response) => {
+const updateBlog = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id
-        const {title, image, content} = req.body
-        const updateBlog = await blogService.updateBlog(id, title, image, content);
-        res.json(updateBlog)
-
-        if (!updateBlog) {
-            console.error(`Blog with ID ${req.params.id} not found.`);
-            res.status(404).send({ error: "Blog not found." });
-        }
-
+      const id = req.params.id;
+      const file = req.file;
+  
+      const { title, content } = req.body;
+      let imageUrl = req.body.image;
+  
+      if (file) {
+        imageUrl = await uploadFile(file);
+      }
+  
+      const { error } = updateValidate({ title, image: imageUrl, content });
+      if (error) {
+        const errors = error.details.map((detail) => detail.message);
+        return res.status(400).json({ errors });
+      }
+  
+      const updatedBlog = await blogService.updateBlog(id, title, imageUrl, content);
+  
+      if (!updatedBlog) {
+        console.error(`Blog with ID ${req.params.id} not found.`);
+        return res.status(404).json({ message: 'Blog not found.' });
+      }
+  
+      return res.status(200).json({ message: 'Blog updated successfully.' });
     } catch (error) {
-        console.error(`Error updating blog with ID ${req.params.id}:`, error);
-        res.status(500).send({ error: "Internal Server Error." });
+      console.error(`Error updating blog with ID ${req.params.id}:`, error);
+      res.status(500).json({ error: 'Internal Server Error.' });
     }
-};
-
-
+  };
+  
 /* Deleting a blog */
 
 const deleteBlog =  async (req:Request, res:Response) => {

@@ -12,7 +12,8 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         const { error } = registerValidate(req.body);
         if (error) {
             res.status(400).send(error.details[0].message);
-        } else {
+        } 
+        else {
             const existEmail = await userModel.findOne({ email: req.body.email });
             if (existEmail) {
                 res.status(400).json({ message: "email already exists" });
@@ -28,7 +29,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
                 });
                 const newUser = await user.save();
                 res.status(200).json({ 
-                    message: "user successfully created.",
+                    message: "user successfully created an account.",
                  });
             }
         }

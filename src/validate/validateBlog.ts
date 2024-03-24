@@ -1,35 +1,31 @@
+
 import Joi from 'joi'
- export const createValidate = (data: string) => {
 
-// Validation schema
-const schema = Joi.object({
-    title: Joi.string()
-    .min(6)
-    .required(),
-    image: Joi.string()
-    // .min(6)
-    .required()
-    .email(),
-    content: Joi.string()
-    .min(6)
-    .required(),
-    role: Joi.string()
-});
- return schema.validate(data)
-}
- export const  updateValidate = (data: string) => {
+export const blogSchema = Joi.object({
+    title: Joi.string().required().min(4).max(20),
+    content: Joi.string().required(),
+    image: Joi.string().required().min(10)
+})
 
-// Validation schema
-const schema = Joi.object({
-     title: Joi.string()
-    .min(6)
-    .email(),
-     image: Joi.string()
-    .min(6),
-     content: Joi.string()
-    .min(6)
-    
+export const querySchema = Joi.object({
+    name: Joi.string().min(2).max(30).required(),
+    email: Joi.string().email().required(),
+    message: Joi.string().max(1000).required(),
 });
- return schema.validate(data)
-}
+
+
+export const updateBlogSchema = Joi.object({
+    title: Joi.string().optional(),
+    description: Joi.string().optional(),
+    image: Joi.string().optional()
+})
+
+ export const updateUserSchema = Joi.object({
+    name: Joi.string().min(4).max(12).optional(),
+    email: Joi.string().email().optional(),
+    role: Joi.string().trim().optional(),
+    password: Joi.string().trim().optional()
+ })
+
+ 
 
