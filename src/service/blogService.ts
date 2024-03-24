@@ -1,4 +1,4 @@
-import Blog from "../models/blog"
+import {Blog, IBlog}from "../models/blog"
 
 const blogService ={
 
@@ -19,8 +19,12 @@ const blogService ={
     },
     
     deleteBlog: async (id:string) => {
-        return await Blog.findByIdAndDelete(id)
-    }
+        return await Blog.findByIdAndDelete(id) 
+    } 
 }
+export const getSingleBlog = async (id: string) => {
+    const blog = await Blog.findById(id);
+    return blog;
+ }
 
 export default blogService

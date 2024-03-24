@@ -1,44 +1,31 @@
-import blogLikes from "../models/blogLikes";
-import blog from "../models/blog";
+import Like from "../models/blogLikes";
+import mongoose from 'mongoose';
+import Likes from "../models/blogLikes"
 
-const likeBlogs = {
-    likeBlog: async (blogId: string, userId: string): Promise<void> => {
-        try {
-            const blogDoc = await blog.findOne({ _id: blogId });
-            if (!blogDoc) {
-                throw new Error("Invalid blog ID");
-            }
-
-            const existLike = await blogLikes.findOne({ blogId, userId });
-            if (existLike) {
-                throw new Error("You already like this blog");
-            } else {
-                const newLike = new blogLikes({
-                    blogId,
-                    userId,
-                });
-                await newLike.save();
-            }
-        } catch (error) {
-            console.error("Error liking the blog:", (error as Error).message);
-            throw error;
-        }
-    },
-
-    viewLikes: async (blogId: string) => {
-        const likes = await blogLikes.find({ blogId: blogId });
-        return likes;
-    },
-
-    countLikes: async (blogId: string) => {
-        try {
-            const count = await blogLikes.countDocuments({ blogId: blogId });
-            return count;
-        } catch (error) {
-            console.error("Error counting likes for the blog:", (error as Error).message);
-            throw error;
-        }
-    }
+export const createLike = async (id: string, userId: string) => {
+  const Likea = await Like.create({
+    blog: id,
+    user: new mongoose.Types.ObjectId(userId),
+  });
+  return Likea;
 };
 
-export default likeBlogs;
+export const getSingleLike = async (blogId: string, userId: string) => {
+  const like = await Like.findOne({
+    // blog: blogId
+    user: userId
+  });
+  console.log(like)
+  return like;
+};
+
+export const dislike = async (id: string) => {
+    const like = await Like.findByIdAndDelete(id)
+    return like;
+}
+
+export const getAllLikes = async (id: string) => {
+  const likes = await Like.find({ blog: id });
+  const likesCount = await Like.countDocuments({ blog: id });
+  return { likes, likesCount };
+};

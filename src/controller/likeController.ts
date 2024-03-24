@@ -1,37 +1,56 @@
-import likeBlogs from "../service/likeServices";
-import mongoose from "mongoose";
+import { getSingleBlog } from "../service/blogService";
 import { Request, Response } from "express";
+import { createLike, dislike, getAllLikes, getSingleLike } from "../service/likeServices";
 
-const likeBlog = async (req: Request, res: Response) => {
-    const { blogId, userId } = req.body;
+export const like = async (req: Request, res: Response) => {
+  const user: any = req.user;
+  console.log("User object:", user);
+  console.log('req.user:', req.user);
 
-    let _id = req.params.id;
+  if (!user) {
+    return res.status(401).json({ status: "Error", message: "User not authenticated" });
+  }
 
-    if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(400).send({ message: "Invalid Blog Id" });
+  try {
+    const id = req.params.id;
+    // const userId = user.userId || user.id || user._id; 
+    const userId = user.id;
+    console.log('id:', id);
+    console.log('userId:', userId);
+    const existingLike: any = await getSingleLike(id, userId);;
+    console.log(existingLike);
+
+    if (existingLike) {
+      await dislike(existingLike._id);
+      res.status(200).json({ status: "success", message: "Like removed successfully" });
+    } else {
+      const blog: any = await getSingleBlog(id);
+      if (!blog) {
+        return res.status(404).json({ status: "Error", message: "Blog not found" });
+      }
+      const Like = await createLike(id, userId);
+      res.status(200).json({
+        status: "success",
+        message: "your like was added",
+        data: Like
+      });
     }
-
-    try {
-        await likeBlogs.likeBlog(blogId, userId);
-
-        return res.status(201).json({ message: "You successfully liked the blog" });
-    } catch (error) {
-        console.error(error);
-        return res.status(400).json({ message: (error as Error).message });
-    }
+  } catch (error: any) {
+    console.error(error);
+    res.status(400).json({ message: error.message });
+  }
 };
 
-const viewLikes = async (req: Request, res: Response) => {
-    try {
-        const blogId = req.params.id;
-        const likes = await likeBlogs.viewLikes(blogId);
-        res.send(likes);
-    } catch (error) {
-        res.status(500).json({ message: (error as Error).message });
-    }
-};
 
-export default {
-    likeBlog,
-    viewLikes
-};
+export const getLikes = async (req: Request, res: Response) => {
+    try{
+        const likes: any = await getAllLikes(req.params.id);
+        res.status(200).json({
+            status: "success",
+            likes: likes.length,
+            data: likes
+        })
+    } catch(err: any){
+        res.status(400).json({ error: err.message })
+    }
+}

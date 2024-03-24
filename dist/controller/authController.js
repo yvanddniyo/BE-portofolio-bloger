@@ -86,20 +86,3 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
-// // authController.ts
-// import { Request, Response } from "express";
-// import { loginUser } from "../service/authService";
-// export const login = async (req: Request, res: Response) => {
-//     try {
-//         const { email, password } = req.body;
-//         // Check if email and password are provided
-//         if (!email || !password) {
-//             return res.status(400).json({ message: "Email and password are required." });
-//         }
-//         const result = await loginUser.login(email, password);
-//         // Send token in response header
-//         res.header('auth-token', result.token).json(result);
-//     } catch (error) {
-//         res.status(500).json({ message: (error as Error).message });
-//     }
-// };

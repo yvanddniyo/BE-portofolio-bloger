@@ -3,6 +3,7 @@ const router = express.Router();
 import blogController from'../controller/blogController'; 
 import authenticateToken from '../middlewares/tokenAuth';
 import authenticateUser from '../middlewares/userAccess';
+import {  getLikes, like } from '../controller/likeController';
 
 
 router.get('/blogs', authenticateUser, blogController.viewAllBlog);

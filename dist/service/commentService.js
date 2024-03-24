@@ -13,6 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogComment_1 = __importDefault(require("../models/blogComment"));
+// import blog from "../models/blog";
+// import { Blog } from "../models/blog";
 const commentService = {
     createComment: (blogId, name, content) => __awaiter(void 0, void 0, void 0, function* () {
         // const blogIds = blog.findOne({_id: blogId}) 

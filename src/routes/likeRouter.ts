@@ -1,10 +1,12 @@
-import express from "express";
-import likeController from "../controller/likeController";
-import tokenAuth from "../middlewares/tokenAuth";
+import express from 'express'
+const router = express.Router();
+import authenticateToken from '../middlewares/tokenAuth';
+import authenticateUser from '../middlewares/userAccess';
+import {  getLikes, like } from '../controller/likeController';
 
 const routerLikes = express.Router();
 
-routerLikes.post("/blogs/:id/likes", tokenAuth, likeController.likeBlog);
-routerLikes.get("/blogs/:id/likes", likeController.viewLikes);
+router.post("/blogs/:id/likes",authenticateUser,  like);
+router.get("/blogs/:id/likes",authenticateUser,   getLikes);
 
 export default routerLikes;

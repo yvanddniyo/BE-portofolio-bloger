@@ -4,18 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const schema = new mongoose_1.default.Schema({
-    blogId: {
+const likeSchema = new mongoose_1.default.Schema({
+    blog: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'blogs',
-        require: true
+        required: true,
+        ref: 'Blog'
     },
-    userId: {
+    user: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        require: true,
-        ref: "Users"
-    },
-}, {
-    timestamps: true
+        required: true,
+        ref: 'Users'
+    }
 });
-exports.default = mongoose_1.default.model('blogLikes', schema);
+const Like = mongoose_1.default.model('Likes', likeSchema);
+exports.default = Like;

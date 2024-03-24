@@ -12,45 +12,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getAllLikes = exports.dislike = exports.getSingleLike = exports.createLike = void 0;
 const blogLikes_1 = __importDefault(require("../models/blogLikes"));
-const blog_1 = __importDefault(require("../models/blog"));
-const likeBlogs = {
-    likeBlog: (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const blogDoc = yield blog_1.default.findOne({ _id: blogId });
-            if (!blogDoc) {
-                throw new Error("Invalid blog ID");
-            }
-            const existLike = yield blogLikes_1.default.findOne({ blogId, userId });
-            if (existLike) {
-                throw new Error("You already like this blog");
-            }
-            else {
-                const newLike = new blogLikes_1.default({
-                    blogId,
-                    userId,
-                });
-                yield newLike.save();
-            }
-        }
-        catch (error) {
-            console.error("Error liking the blog:", error.message);
-            throw error;
-        }
-    }),
-    viewLikes: (blogId) => __awaiter(void 0, void 0, void 0, function* () {
-        const likes = yield blogLikes_1.default.find({ blogId: blogId });
-        return likes;
-    }),
-    countLikes: (blogId) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const count = yield blogLikes_1.default.countDocuments({ blogId: blogId });
-            return count;
-        }
-        catch (error) {
-            console.error("Error counting likes for the blog:", error.message);
-            throw error;
-        }
-    })
-};
-exports.default = likeBlogs;
+const mongoose_1 = __importDefault(require("mongoose"));
+const createLike = (id, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const Likea = yield blogLikes_1.default.create({
+        blog: id,
+        user: new mongoose_1.default.Types.ObjectId(userId),
+    });
+    return Likea;
+});
+exports.createLike = createLike;
+const getSingleLike = (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const like = yield blogLikes_1.default.findOne({
+        // blog: blogId
+        user: userId
+    });
+    console.log(like);
+    return like;
+});
+exports.getSingleLike = getSingleLike;
+const dislike = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const like = yield blogLikes_1.default.findByIdAndDelete(id);
+    return like;
+});
+exports.dislike = dislike;
+const getAllLikes = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const likes = yield blogLikes_1.default.find({ blog: id });
+    const likesCount = yield blogLikes_1.default.countDocuments({ blog: id });
+    return { likes, likesCount };
+});
+exports.getAllLikes = getAllLikes;

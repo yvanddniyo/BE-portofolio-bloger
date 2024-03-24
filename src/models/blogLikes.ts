@@ -1,19 +1,40 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-const schema = new mongoose.Schema ({
-    blogId: {
-        type:mongoose.Schema.Types.ObjectId, 
-        ref: 'blogs', 
-        require:true
+export interface likes {
+    blog: String,
+    user: String,
+    like: Boolean
+
+}
+
+const likeSchema = new mongoose.Schema<likes>({
+    blog: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Blog'
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId, 
-        require: true,
-        ref: "Users"
-    },
-   
-},{
- timestamps: true
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Users'
+    }
 })
 
-export default  mongoose.model('blogLikes', schema);
+const Like = mongoose.model<likes>('Likes', likeSchema)
+
+export default Like
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
