@@ -54,11 +54,11 @@ const updateValidate = (data) => {
     const schema = joi_1.default.object({
         title: joi_1.default.string()
             .min(6)
-            .required(),
+            .optional(),
         image: joi_1.default.string()
-            .required(),
+            .optional(),
         content: joi_1.default.string()
-            .required()
+            .optional()
             .min(10),
     });
     return schema.validate(data);

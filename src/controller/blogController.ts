@@ -19,9 +19,7 @@ const viewAllBlog = async(req:Request, res:Response) => {
 /* create the a blogs */
 
 const createBlog = async (req: Request, res: Response) => {
-  //   console.log('Request headers:', req.headers);
-  // console.log('Request body:', req.body);
-  console.log('Request file:', req.file);
+ 
     const file = req.file;
     try {
       if (!file) {
@@ -34,9 +32,10 @@ const createBlog = async (req: Request, res: Response) => {
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
     }
-      const eachBlog = await blogService.createBlog(title, imageUrl, content);
+       await blogService.createBlog(title, imageUrl, content);
       res.status(201).json({
         title: title,
+        status: 'succes',
         message: "Blog create successfully"
       });
     } catch (error) {
@@ -84,7 +83,10 @@ const updateBlog = async (req: Request, res: Response) => {
         return res.status(404).json({ message: 'Blog not found.' });
       }
   
-      return res.status(200).json({ message: 'Blog updated successfully.' });
+      return res.status(200).json({ 
+        status: 'succes',
+        message: 'Blog updated successfully.' 
+    });
     } catch (error) {
       console.error(`Error updating blog with ID ${req.params.id}:`, error);
       res.status(500).json({ error: 'Internal Server Error.' });
@@ -99,7 +101,10 @@ const deleteBlog =  async (req:Request, res:Response) => {
      if (!blog) {
          return res.status(404).json({ message: 'Blog not found' });
         }
-        res.json({ message: 'Blog deleted successfully' });
+        res.json({ 
+          status: 'succes',
+          message: 'Blog deleted successfully' 
+      });
     } catch (error) {
         res.status(500).json({ message:(error as Error).message });
     }

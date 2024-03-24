@@ -53,11 +53,11 @@ export const updateValidate = (data: any) => {
     const schema = Joi.object({
       title: Joi.string()
       .min(6)
-      .required(),
+      .optional(),
       image: Joi.string()
-      .required(),
+      .optional(),
       content: Joi.string()
-      .required()
+      .optional()
       .min(10),
     });
     return schema.validate(data);

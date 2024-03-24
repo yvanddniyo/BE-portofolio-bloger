@@ -27,9 +27,6 @@ const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 /* create the a blogs */
 const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //   console.log('Request headers:', req.headers);
-    // console.log('Request body:', req.body);
-    console.log('Request file:', req.file);
     const file = req.file;
     try {
         if (!file) {
@@ -41,9 +38,10 @@ const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
         }
-        const eachBlog = yield blogService_1.default.createBlog(title, imageUrl, content);
+        yield blogService_1.default.createBlog(title, imageUrl, content);
         res.status(201).json({
             title: title,
+            status: 'succes',
             message: "Blog create successfully"
         });
     }
@@ -83,7 +81,10 @@ const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             console.error(`Blog with ID ${req.params.id} not found.`);
             return res.status(404).json({ message: 'Blog not found.' });
         }
-        return res.status(200).json({ message: 'Blog updated successfully.' });
+        return res.status(200).json({
+            status: 'succes',
+            message: 'Blog updated successfully.'
+        });
     }
     catch (error) {
         console.error(`Error updating blog with ID ${req.params.id}:`, error);
@@ -97,7 +98,10 @@ const deleteBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!blog) {
             return res.status(404).json({ message: 'Blog not found' });
         }
-        res.json({ message: 'Blog deleted successfully' });
+        res.json({
+            status: 'succes',
+            message: 'Blog deleted successfully'
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
