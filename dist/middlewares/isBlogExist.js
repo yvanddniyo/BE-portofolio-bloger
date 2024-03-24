@@ -8,16 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkExistingBlog = void 0;
-const blog_1 = __importDefault(require("../models/blog"));
+const blog_1 = require("../models/blog");
 const checkExistingBlog = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogId = req.params.id;
-        const isBlogThere = yield blog_1.default.findById(blogId);
+        const isBlogThere = yield blog_1.Blog.findById(blogId);
         if (!isBlogThere) {
             return res.status(404).json({
                 message: "Blog you selected not found."

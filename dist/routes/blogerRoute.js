@@ -8,9 +8,6 @@ const router = express_1.default.Router();
 const blogController_1 = __importDefault(require("../controller/blogController"));
 const tokenAuth_1 = __importDefault(require("../middlewares/tokenAuth"));
 const userAccess_1 = __importDefault(require("../middlewares/userAccess"));
-
-const likeController_1 = require("../controller/likeController");
-
 const multer_1 = __importDefault(require("../helper/multer"));
 /**
  * @swagger
@@ -66,7 +63,6 @@ const multer_1 = __importDefault(require("../helper/multer"));
  *       500:
  *         description: Internal server error
  */
-
 router.get('/blogs', userAccess_1.default, blogController_1.default.viewAllBlog);
 /**
  * @swagger
@@ -240,6 +236,4 @@ router.patch('/blogs/:id', tokenAuth_1.default, multer_1.default.single('image')
  *       bearerFormat: JWT
  */
 router.delete('/blogs/:id', tokenAuth_1.default, blogController_1.default.deleteBlog);
-router.post("/blogs/:id/likes", userAccess_1.default, likeController_1.like);
-router.get("/blogs/:id/likes", userAccess_1.default, likeController_1.getLikes);
 exports.default = router;

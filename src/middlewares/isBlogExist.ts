@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Document } from "mongoose";
-import Blog from "../models/blog"
+import { Blog } from "../models/blog";
 
 
 interface CustomRequest extends Request {
