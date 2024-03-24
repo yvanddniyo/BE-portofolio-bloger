@@ -13,10 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userService_1 = __importDefault(require("../service/userService"));
+const validate_1 = require("../validate/validate");
 const viewAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield userService_1.default.viewAllUser();
-        res.json(user);
+        res.status(200).json(user);
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -49,8 +50,14 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const id = req.params.id;
         const { username, email, password } = req.body;
+        const { error } = (0, validate_1.userUpdateValidate)({ username, email, password });
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
         const updateUser = yield userService_1.default.updateUser(id, username, email, password);
-        res.json(updateUser);
+        res.json({
+            message: "User has been updated successfully"
+        });
         if (!updateUser) {
             console.error(`User with ID ${req.params.id} not found.`);
             res.status(404).send({ error: "Blog not found." });

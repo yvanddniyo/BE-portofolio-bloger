@@ -13,6 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogService_1 = __importDefault(require("../service/blogService"));
+const claudinary_1 = __importDefault(require("../helper/claudinary"));
+const validate_1 = require("../validate/validate");
 // Get all posts
 const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,10 +27,25 @@ const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 /* create the a blogs */
 const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //   console.log('Request headers:', req.headers);
+    // console.log('Request body:', req.body);
+    console.log('Request file:', req.file);
+    const file = req.file;
     try {
-        const { title, image, content } = req.body;
-        const eachBlog = yield blogService_1.default.createBlog(title, image, content);
-        res.status(201).json(eachBlog);
+        if (!file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+        const imageUrl = yield (0, claudinary_1.default)(file);
+        const { title, content } = req.body;
+        const { error } = (0, validate_1.createValidate)({ title, image: imageUrl, content });
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+        const eachBlog = yield blogService_1.default.createBlog(title, imageUrl, content);
+        res.status(201).json({
+            title: title,
+            message: "Blog create successfully"
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -50,17 +67,27 @@ const singleBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
-        const { title, image, content } = req.body;
-        const updateBlog = yield blogService_1.default.updateBlog(id, title, image, content);
-        res.json(updateBlog);
-        if (!updateBlog) {
-            console.error(`Blog with ID ${req.params.id} not found.`);
-            res.status(404).send({ error: "Blog not found." });
+        const file = req.file;
+        const { title, content } = req.body;
+        let imageUrl = req.body.image;
+        if (file) {
+            imageUrl = yield (0, claudinary_1.default)(file);
         }
+        const { error } = (0, validate_1.updateValidate)({ title, image: imageUrl, content });
+        if (error) {
+            const errors = error.details.map((detail) => detail.message);
+            return res.status(400).json({ errors });
+        }
+        const updatedBlog = yield blogService_1.default.updateBlog(id, title, imageUrl, content);
+        if (!updatedBlog) {
+            console.error(`Blog with ID ${req.params.id} not found.`);
+            return res.status(404).json({ message: 'Blog not found.' });
+        }
+        return res.status(200).json({ message: 'Blog updated successfully.' });
     }
     catch (error) {
         console.error(`Error updating blog with ID ${req.params.id}:`, error);
-        res.status(500).send({ error: "Internal Server Error." });
+        res.status(500).json({ error: 'Internal Server Error.' });
     }
 });
 /* Deleting a blog */

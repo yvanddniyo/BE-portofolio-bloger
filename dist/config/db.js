@@ -22,10 +22,7 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         if (!mongoUrl) {
             throw new Error("MongoDB connection string is not provided");
         }
-        yield mongoose_1.default.connect(mongoUrl, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
-        });
+        yield mongoose_1.default.connect(mongoUrl, {});
         console.log('Successfully connected to the database');
     }
     catch (error) {

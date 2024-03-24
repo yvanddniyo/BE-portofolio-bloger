@@ -1,5 +1,5 @@
 import Users from "../models/userModel"
-import { hashedPassword } from "../utls/hashPassoword"
+// import { hashedPassword } from "../utls/hashPassoword"
 import jwt from 'jsonwebtoken'
 
 const userServices = {
