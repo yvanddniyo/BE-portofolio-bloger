@@ -41,7 +41,7 @@ const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         yield blogService_1.default.createBlog(title, imageUrl, content);
         res.status(201).json({
             title: title,
-            status: 'succes',
+            status: 'success',
             message: "Blog create successfully"
         });
     }
@@ -82,7 +82,7 @@ const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(404).json({ message: 'Blog not found.' });
         }
         return res.status(200).json({
-            status: 'succes',
+            status: 'success',
             message: 'Blog updated successfully.'
         });
     }
@@ -99,7 +99,7 @@ const deleteBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(404).json({ message: 'Blog not found' });
         }
         res.json({
-            status: 'succes',
+            status: 'success',
             message: 'Blog deleted successfully'
         });
     }

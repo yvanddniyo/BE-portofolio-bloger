@@ -35,7 +35,7 @@ const createBlog = async (req: Request, res: Response) => {
        await blogService.createBlog(title, imageUrl, content);
       res.status(201).json({
         title: title,
-        status: 'succes',
+        status: 'success',
         message: "Blog create successfully"
       });
     } catch (error) {
@@ -84,7 +84,7 @@ const updateBlog = async (req: Request, res: Response) => {
       }
   
       return res.status(200).json({ 
-        status: 'succes',
+        status: 'success',
         message: 'Blog updated successfully.' 
     });
     } catch (error) {
@@ -102,7 +102,7 @@ const deleteBlog =  async (req:Request, res:Response) => {
          return res.status(404).json({ message: 'Blog not found' });
         }
         res.json({ 
-          status: 'succes',
+          status: 'success',
           message: 'Blog deleted successfully' 
       });
     } catch (error) {
