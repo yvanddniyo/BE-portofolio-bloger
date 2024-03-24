@@ -21,7 +21,7 @@ function authenticateUser(req, res, next) {
         // Check if the user is an admin
         if ((req.user.role || '').trim().toLowerCase() !== 'user') {
             res.status(403).json({
-                message: "Unauthorized: Only admins can perform this action"
+                message: "Sorry, you didn't log in, Please log in! "
             });
             return;
         }
