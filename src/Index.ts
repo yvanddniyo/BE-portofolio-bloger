@@ -7,14 +7,22 @@ import routerComment from './routes/commentRoute';
 import routerQuery from './routes/queryRoute';
 import routerUser from './routes/userRoute';
 import routerAuth from './routes/authRouter';
-import bodyParser from 'body-parser';   
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
 
 import routerLikes from './routes/likeRouter';
 
 
 const PORT = process.env.PORT || 5000;
+
+
+import upload from './helper/multer';
+import cloudinary from 'cloudinary';
+import fs from 'fs'
+
+import bodyParser from 'body-parser';   
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+
+
 
 
 
@@ -35,6 +43,9 @@ const options: swaggerJsdoc.Options ={
         servers: [
             {
                 url: 'http://localhost:5000'
+            },
+            {
+                url: 'https://be-portofolio-bloger.onrender.com'
             },
         ], 
          
@@ -64,6 +75,9 @@ app.use('/api/v1', routerAuth)
 app.use('/api/v1', routerLikes)
 
 
+
+
+// requesting image
 
 
 app.listen(PORT, () => {

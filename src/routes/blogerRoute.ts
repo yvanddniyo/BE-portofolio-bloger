@@ -3,8 +3,11 @@ const router = express.Router();
 import blogController from '../controller/blogController';
 import authenticateToken from '../middlewares/tokenAuth';
 import authenticateUser from '../middlewares/userAccess';
+
 import {  getLikes, like } from '../controller/likeController';
 import upload from '../helper/multer';
+import { checkExistingBlog } from '../middlewares/isBlogExist';
+
 
 /**
  * @swagger
@@ -66,7 +69,10 @@ import upload from '../helper/multer';
  *         description: Internal server error
  */
  
-router.get('/blogs', authenticateUser,  blogController.viewAllBlog);
+router.get('/blogs', 
+ authenticateUser,  
+ blogController.viewAllBlog
+);
 /**
  * @swagger
  * /api/v1/blogs:
@@ -121,9 +127,9 @@ router.get('/blogs', authenticateUser,  blogController.viewAllBlog);
  */
 
 router.post('/blogs', 
- authenticateToken, 
- upload.single('image'), 
- blogController.createBlog
+    authenticateToken,
+    upload.single('image'), 
+    blogController.createBlog
 );
 
 /**
@@ -144,7 +150,10 @@ router.post('/blogs',
  *       200:
  *         description: Successful response
  */
-router.get('/blogs/:id', authenticateUser, blogController.singleBlog);
+router.get('/blogs/:id', 
+ authenticateUser, 
+ blogController.singleBlog
+);
 
 /**
  * @swagger
@@ -213,7 +222,11 @@ router.get('/blogs/:id', authenticateUser, blogController.singleBlog);
  *           type: string
  *           format: date-time
  */
-router.patch('/blogs/:id', upload.single('image'), authenticateToken, blogController.updateBlog);
+router.patch('/blogs/:id', 
+ authenticateToken, 
+ upload.single('image'), 
+ blogController.updateBlog
+);
 
 /**
  * @swagger
@@ -247,6 +260,9 @@ router.patch('/blogs/:id', upload.single('image'), authenticateToken, blogContro
  *       bearerFormat: JWT
  */
 
-router.delete('/blogs/:id', authenticateToken, blogController.deleteBlog);
+router.delete('/blogs/:id', 
+ authenticateToken, 
+ blogController.deleteBlog
+);
 
 export default router;

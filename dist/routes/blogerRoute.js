@@ -8,9 +8,9 @@ const router = express_1.default.Router();
 const blogController_1 = __importDefault(require("../controller/blogController"));
 const tokenAuth_1 = __importDefault(require("../middlewares/tokenAuth"));
 const userAccess_1 = __importDefault(require("../middlewares/userAccess"));
-<<<<<<< HEAD
+
 const likeController_1 = require("../controller/likeController");
-=======
+
 const multer_1 = __importDefault(require("../helper/multer"));
 /**
  * @swagger
@@ -66,7 +66,7 @@ const multer_1 = __importDefault(require("../helper/multer"));
  *       500:
  *         description: Internal server error
  */
->>>>>>> ft-swagger
+
 router.get('/blogs', userAccess_1.default, blogController_1.default.viewAllBlog);
 /**
  * @swagger
@@ -207,7 +207,7 @@ router.get('/blogs/:id', userAccess_1.default, blogController_1.default.singleBl
  *           type: string
  *           format: date-time
  */
-router.patch('/blogs/:id', multer_1.default.single('image'), tokenAuth_1.default, blogController_1.default.updateBlog);
+router.patch('/blogs/:id', tokenAuth_1.default, multer_1.default.single('image'), blogController_1.default.updateBlog);
 /**
  * @swagger
  * /api/v1/blogs/{id}:

@@ -12,26 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// const mongoose = require('mongoose')
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.checkExistingUsers = void 0;
+const userModel_1 = __importDefault(require("../models/userModel"));
+const checkExistingUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const mongoUrl = process.env.MONGO_URL;
-        if (!mongoUrl) {
-            throw new Error("MongoDB connection string is not provided");
+        const blogId = req.params.id;
+        const isUsersThere = yield userModel_1.default.findById(blogId);
+        if (!isUsersThere) {
+            return res.status(404).json({
+                message: "Users you selected not found."
+            });
         }
-        yield mongoose_1.default.connect(mongoUrl, {});
-        console.log('Successfully connected to the database');
+        req.blog = isUsersThere;
+        next();
     }
     catch (error) {
-        if (error instanceof Error) {
-            console.error('Error connecting to the database:', error.message);
-        }
-        else {
-            console.error('An unknown error occurred while connecting to the database');
-        }
+        console.error('Error checking blog existence:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 });
-exports.default = connectDB;
+exports.checkExistingUsers = checkExistingUsers;

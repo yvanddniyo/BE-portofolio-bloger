@@ -13,11 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogService_1 = __importDefault(require("../service/blogService"));
-// import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
 const claudinary_1 = __importDefault(require("../helper/claudinary"));
 const validate_1 = require("../validate/validate");
-// import { uploadFile } from "../helper/claudinary"
-// import uploadFile from "../helper/claudinary"
 // Get all posts
 const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -30,6 +27,8 @@ const viewAllBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 /* create the a blogs */
 const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //   console.log('Request headers:', req.headers);
+    // console.log('Request body:', req.body);
     console.log('Request file:', req.file);
     const file = req.file;
     try {
@@ -43,7 +42,10 @@ const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(400).json({ message: error.details[0].message });
         }
         const eachBlog = yield blogService_1.default.createBlog(title, imageUrl, content);
-        res.status(201).json(eachBlog);
+        res.status(201).json({
+            title: title,
+            message: "Blog create successfully"
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

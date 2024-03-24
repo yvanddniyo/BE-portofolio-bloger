@@ -1,13 +1,10 @@
 import blogService from "../service/blogService"
 import { Request, Response } from "express"
-// import { blogSchema, updateBlogSchema } from "../validate/validateBlog"
 import uploadFile from "../helper/claudinary"
 import { createValidate, updateValidate } from "../validate/validate"
-// import { uploadFile } from "../helper/claudinary"
-// import uploadFile from "../helper/claudinary"
+
 
 // Get all posts
-
 
 const viewAllBlog = async(req:Request, res:Response) => {
     try {
@@ -22,6 +19,8 @@ const viewAllBlog = async(req:Request, res:Response) => {
 /* create the a blogs */
 
 const createBlog = async (req: Request, res: Response) => {
+  //   console.log('Request headers:', req.headers);
+  // console.log('Request body:', req.body);
   console.log('Request file:', req.file);
     const file = req.file;
     try {
@@ -36,7 +35,10 @@ const createBlog = async (req: Request, res: Response) => {
       return res.status(400).json({ message: error.details[0].message });
     }
       const eachBlog = await blogService.createBlog(title, imageUrl, content);
-      res.status(201).json(eachBlog);
+      res.status(201).json({
+        title: title,
+        message: "Blog create successfully"
+      });
     } catch (error) {
       res.status(500).json({ message: (error as Error).message });
     }
