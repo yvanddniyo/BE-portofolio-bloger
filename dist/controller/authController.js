@@ -75,11 +75,12 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Include the user's role in the JWT token payload
         const payload = {
             id: user._id,
+            username: user.username,
             email: user.email,
             role: user.role
         };
         const token = jsonwebtoken_1.default.sign(payload, `${process.env.JWT_TOKEN}`);
-        res.header('auth-token', token).send(token);
+        res.header('auth-token', token).send({ token });
     }
     catch (err) {
         res.status(500).send(err.message);

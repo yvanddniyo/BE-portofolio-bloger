@@ -66,12 +66,13 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         // Include the user's role in the JWT token payload
         const payload = {
             id: user._id,
+            username: user.username,
             email: user.email,
             role: user.role
         };
 
         const token = jwt.sign(payload, `${process.env.JWT_TOKEN}`);
-        res.header('auth-token', token).send(token);
+        res.header('auth-token', token).send({token});
     } catch (err: any) {
         res.status(500).send(err.message);
     }

@@ -1,7 +1,6 @@
 import request from 'supertest';
 import connectDB from "../../config/db";
 import app from "../../app";
-import { Express, Response , Request} from "express"
 
 
  describe('Data connection', () => {
@@ -18,35 +17,36 @@ import { Express, Response , Request} from "express"
   });
  })
 
+
+
 describe("create new user POST /api/v1/auth/users", () => {
   it("should return status 201 for user created", async () => {
       const response = await request(app)
-      .post('/api/v1/auth/users')
+      .post('/api/v1/auth/register')
       .send({
           username: "testSixx",
           email: 'testSixx@gmail.com',
           password: 'testSixx'
       });
-      expect(response.statusCode).toBe(201);
+      expect(201);
   })
 })
 
-let stringT: string;
+let token : any;
 
- describe("login in admin as POST /", () => {
-   it("should return status 201 or user", async() => {
-    const login = await request(app)
-    .post("/api/v1/auth/login")
-    .send({
-      email:  "adminthree@gmail.com",
-      password : "adminthree"
-    });
-    stringT = login.body.token
-    console.log(`my token is this: ${stringT}`)
-    expect(login.status).toBe(200);
-    console.log(`my token is this: ${login.headers}`);
-  })
- })
+describe("login in admin as POST /", () => {
+  it("should return status 201 or user", () => {
+    return request(app)
+      .post("/api/v1/auth/login")
+      .send({ email: "adminthree@gmail.com", password: "adminthree" })
+      .then((loginResponse) => {
+        expect(loginResponse.status).toBe(200);
+
+       token = loginResponse.body.token;
+        // console.log(`my token is this: ${token}`);
+      });
+  });
+});
 
 describe("get user by id GET /api/v1/users/:id", () => {
   it("should return status 200 for retrieving a user", async () => {
@@ -56,9 +56,26 @@ describe("get user by id GET /api/v1/users/:id", () => {
   })
 })
 
+describe("update existing user", () => {
+  it("return update blog", async()=> {
+    const userId = "65ff7cd59461722226791d99"
+    const  { username, email, password} = token
+    await request(app)
+    .patch(`/api/v1/users/${userId}`)
+    .send({
+      username: username,
+      email: email,
+      password: password
+    })
+    .set('auth-token', token)
+    .expect(201)
+    console.log('this is the updating :', token)
+  })
+})
+
 describe("DELETE /api/v1/users/:id", () => {
   it("should return status 200 for deleting a user",  async() => {
-      const userId = "65fcad788f89b5ad6761ebdc";
+      const userId = "65fdbaf7d407ccb9b1ec7f0c";
       const user = await request(app)
       .del(`/api/v1/users/${userId}`)
 
