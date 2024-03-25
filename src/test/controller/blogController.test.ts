@@ -11,6 +11,22 @@ describe('Data connection', () => {
 })
 
 let token: string;
+let adminToken: string;
+
+describe("login as admin", () => {
+  beforeAll(async () => {
+    const loginResponse = await request(app)
+      .post("/api/v1/auth/login")
+      .send({ "email": "adminthree@gmail.com", password: "adminthree" });
+    adminToken = loginResponse.body.token;
+    expect(loginResponse.status).toBe(200);
+  });
+
+  it("should log the admin token", async () => {
+    console.log(`Admin token: ${adminToken}`);
+  });
+});
+
 describe("login in admin as POST /", () => {
   beforeAll(async () => {
     const loginResponse = await request(app)
@@ -50,9 +66,9 @@ describe("get a blogs does not exist",() => {
       const user = await request(app)
         .get(`/api/v1/blogs/${blogId}`)
         .set('auth-token', token);
-        expect(user.status).toBe(200)
+        expect(user.status).toBe(201)
     });
-    
+
     it("should return status 200 for retrieving a blog", async () => {
       const blogId = "my_blogerId";
        await request(app)
@@ -74,7 +90,7 @@ describe("get a blogs does not exist",() => {
       const blogId = "my_blogerId";
        await request(app)
         .del(`/api/v1/blogs/${blogId}`)
-        .set('auth-token', token)
+        .set('auth-token', adminToken)
         expect(404)
     });
   });

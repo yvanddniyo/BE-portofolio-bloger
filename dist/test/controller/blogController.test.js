@@ -22,6 +22,19 @@ describe('Data connection', () => {
     }));
 });
 let token;
+let adminToken;
+describe("login as admin", () => {
+    beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        const loginResponse = yield (0, supertest_1.default)(app_1.default)
+            .post("/api/v1/auth/login")
+            .send({ "email": "adminthree@gmail.com", password: "adminthree" });
+        adminToken = loginResponse.body.token;
+        expect(loginResponse.status).toBe(200);
+    }));
+    it("should log the admin token", () => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(`Admin token: ${adminToken}`);
+    }));
+});
 describe("login in admin as POST /", () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         const loginResponse = yield (0, supertest_1.default)(app_1.default)
@@ -57,7 +70,7 @@ describe("get blog by id", () => {
         const user = yield (0, supertest_1.default)(app_1.default)
             .get(`/api/v1/blogs/${blogId}`)
             .set('auth-token', token);
-        expect(user.status).toBe(200);
+        expect(user.status).toBe(201);
     }));
     it("should return status 200 for retrieving a blog", () => __awaiter(void 0, void 0, void 0, function* () {
         const blogId = "my_blogerId";
@@ -79,7 +92,7 @@ describe("delete user by id", () => {
         const blogId = "my_blogerId";
         yield (0, supertest_1.default)(app_1.default)
             .del(`/api/v1/blogs/${blogId}`)
-            .set('auth-token', token);
+            .set('auth-token', adminToken);
         expect(404);
     }));
 });

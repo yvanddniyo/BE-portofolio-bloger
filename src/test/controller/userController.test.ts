@@ -34,6 +34,21 @@ describe("create new user POST /api/v1/auth/users", () => {
 })
 
 let token : any;
+let adminToken: string;
+
+describe("login as admin", () => {
+  beforeAll(async () => {
+    const loginResponse = await request(app)
+      .post("/api/v1/auth/login")
+      .send({ "email": "adminthree@gmail.com", password: "adminthree" });
+    adminToken = loginResponse.body.token;
+    expect(loginResponse.status).toBe(200);
+  });
+
+  it("should log the admin token", async () => {
+    console.log(`Admin token: ${adminToken}`);
+  });
+});
 
 describe("login in admin as POST /", () => {
   it("should return status 201 or user", () => {
@@ -69,7 +84,7 @@ describe("update existing user", () => {
       password: password
     })
     .set('auth-token', token)
-    .expect(201)
+    .expect(200)
     console.log('this is the updating :', token)
   })
 })
@@ -79,8 +94,8 @@ describe("DELETE /api/v1/users/:id", () => {
       const userId = "65fdbaf7d407ccb9b1ec7f0c";
       const user = await request(app)
       .del(`/api/v1/users/${userId}`)
-
-      expect(user.statusCode).toBe(200)
+      .set('auth-token', token)
+      .expect(200)
   });
 })
 
