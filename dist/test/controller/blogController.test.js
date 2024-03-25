@@ -42,10 +42,6 @@ describe("login in admin as POST /", () => {
             .send({ "email": "userones@gmail.com", password: "userones" });
         token = loginResponse.body.token;
         expect(loginResponse.status).toBe(200);
-        // console.log('amahoro :', token)
-    }));
-    it("should log the token", () => __awaiter(void 0, void 0, void 0, function* () {
-        // console.log(`my token is this: ${token}`);
     }));
 });
 describe("get a blogs does not exist", () => {

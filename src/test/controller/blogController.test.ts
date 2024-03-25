@@ -34,11 +34,6 @@ describe("login in admin as POST /", () => {
       .send({ "email": "userones@gmail.com", password: "userones" });
     token = loginResponse.body.token;
     expect(loginResponse.status).toBe(200);
-    // console.log('amahoro :', token)
-  });
-
-  it("should log the token", async () => {
-    // console.log(`my token is this: ${token}`);
   });
 });
 
