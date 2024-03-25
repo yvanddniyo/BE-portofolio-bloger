@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 import upload from './helper/multer';
 import cloudinary from 'cloudinary';
-import fs from 'fs'
+import fs from 'fs';
 
 import bodyParser from 'body-parser';   
 import swaggerJsdoc from "swagger-jsdoc";

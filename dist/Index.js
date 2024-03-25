@@ -56,7 +56,7 @@ app.use('/api/v1', queryRoute_1.default);
 app.use('/api/v1', userRoute_1.default);
 app.use('/api/v1', authRouter_1.default);
 app.use('/api/v1', likeRouter_1.default);
-// requesting image
+// requesting imag
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
