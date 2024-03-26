@@ -46,7 +46,7 @@ const options: swaggerJsdoc.Options ={
                 url: 'http://localhost:5000'
             },
             {
-                url: 'https://be-portofolio-bloger-4.onrender.com'
+                url: 'https://be-portofolio-bloger-2.onrender.com'
             },
         ], 
          
