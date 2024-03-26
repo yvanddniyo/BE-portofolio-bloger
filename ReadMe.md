@@ -21,4 +21,3 @@ git clone https://github.com/your-username/BE-portofolio.git
 cd MyBrand-BE
 npm install
 npm start
-```
