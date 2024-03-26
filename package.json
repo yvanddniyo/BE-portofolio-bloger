@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "dev": "nodemon dist/index.js",
-    "test": "jest --detectOpenHandles --coverage --forceExit"
+    "test": "jest --detectOpenHandles --coverage --forceExit",
+    "coveralls": "jest --coverage --forceExit --detectOpenHandles"
   },
   "jest": {
     "preset": "ts-jest",
