@@ -69,8 +69,7 @@ import { checkExistingBlog } from '../middlewares/isBlogExist';
  *         description: Internal server error
  */
  
-router.get('/blogs', 
- authenticateUser,  
+router.get('/blogs',   
  blogController.viewAllBlog
 );
 /**
@@ -151,7 +150,6 @@ router.post('/blogs',
  *         description: Successful response
  */
 router.get('/blogs/:id', 
- authenticateUser, 
  blogController.singleBlog
 );
 

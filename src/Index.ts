@@ -2,7 +2,8 @@ import express from 'express'
 import connectDB from "./config/db"
 // import hfhfhf from "../../Blogger/src/routes/*.ts"
 const app = express();
-import router from "./routes/blogerRoute"
+import router from "./routes/blogerRoute";
+import cors from "cors"
 import routerComment from './routes/commentRoute';
 import routerQuery from './routes/queryRoute';
 import routerUser from './routes/userRoute';
@@ -64,6 +65,8 @@ connectDB()
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cors())
 
 /*new routes*/
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
