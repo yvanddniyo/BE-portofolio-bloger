@@ -23,8 +23,6 @@ const BlogModel: Model<IBlog> = mongoose.model<IBlog>("Blog", BlogSchema);
 describe('Blog Model', () => {
     beforeAll(async () => {
         await mongoose.connect(`${process.env.MONGO_URL}`, {
-            // useNewUrlParser: true,
-            // useUnifiedTopology: true
         });
     });
 

@@ -46,10 +46,7 @@ const BlogSchema = new mongoose_1.Schema({
 const BlogModel = mongoose_1.default.model("Blog", BlogSchema);
 describe('Blog Model', () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield mongoose_1.default.connect(`${process.env.MONGO_URL}`, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true
-        });
+        yield mongoose_1.default.connect(`${process.env.MONGO_URL}`, {});
     }));
     afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield BlogModel.deleteMany({});
