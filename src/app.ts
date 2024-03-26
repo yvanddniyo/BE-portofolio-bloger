@@ -17,8 +17,6 @@ const PORT = process.env.PORT || 5000;
 // import fs from 'fs'
 
 // connect to the mongoDB
-connectDB()
-
 // middlewares
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,5 +29,7 @@ app.use(bodyParser.json());
 // app.use('/api/v1', routerQuery)
 app.use('/api/v1', routerUser)
 // app.use('/api/v1', routerAuth)
+
+
 
 export default app

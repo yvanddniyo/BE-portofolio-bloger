@@ -1,9 +1,12 @@
-import express from 'express';
+import express,{ Application } from 'express';
 import userController from '../controller/userController';
 import authenticateUser from '../middlewares/userAccess';
 import authenticateToken from '../middlewares/tokenAuth';
 import { registerUser, loginUser } from '../controller/authController';
 import { checkExistingUsers } from '../middlewares/isUserExist';
+
+const app: Application = express();
+app.use(express.json());
 
 const routerUser = express.Router();
 /**
@@ -200,5 +203,6 @@ routerUser.delete('/users/:id',
 );
 
 
-export default routerUser;
+export default routerUser
+
 

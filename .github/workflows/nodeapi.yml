@@ -7,6 +7,15 @@ on:
   pull_request:
     branches:
       - main
+env:
+  MONGO_URL: ${{secrets.MONGO_URL}}
+  cloud_name: ${{secrets.cloud_name}}
+  cloud_key: ${{secrets.cloud_key}}
+  cloud_secret: ${{secrets.cloud_secret}}
+  JWT_TOKEN: ${{secrets.JWT_TOKEN}}
+  MONGO_URL_TEST: ${{secrets.MONGO_URL_TEST}}
+  PORT_TEST: ${{secrets.PORT_TEST}}
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
 jobs:
   jobs1:
