@@ -4,18 +4,12 @@ import jwt from 'jsonwebtoken'
 
 const userServices = {
 viewAllUser : async () =>{
-    return await Users.find()
+    return await Users.find({}, '-password')
   },
 createUser : async (username: string, email: string, password: string) => {
     const check  = await Users.findOne({username})
      if(check) {
         throw new Error("User already exist.");
-     }
-     else {
-        // const token = jwt.sign({name: username}, "process.env.JWT_TOKEN")
-        //  const hashed = await hashedPassword(password, 10)
-        //  const newUser = new Users({username, email, password:hashed})
-        //  return newUser.save();
      }
   },
   

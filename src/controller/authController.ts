@@ -48,12 +48,18 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
         const user = await userModel.findOne({ email: req.body.email });
         if (!user) {
-            res.status(400).json({ message: "Email doesn't exist in our DB" });
+            res.status(400).json({ 
+                status: 400,
+                message: "Email doesn't exist in our DB" 
+        });
             return;
         }
 
         if (!user.password) {
-            res.status(400).json({ message: "Password not found for the user" });
+            res.status(400).json({ 
+                status: 400,
+                message: "Password not found for the user" 
+        });
             return;
         }
 

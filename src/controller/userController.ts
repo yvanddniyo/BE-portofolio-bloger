@@ -18,6 +18,7 @@ const createUser = async(req:Request, res:Response) => {
     
     const eachUser =  await userServices.createUser(username, email, password);
     res.status(200).json({
+        status: 201,
         message: "user successful created"
     })
  } 
@@ -47,7 +48,7 @@ const updateUser = async (req:Request, res:Response) => {
         }
         const updateUser = await userServices.updateUser(id, username, email, password);
         res.json({
-            status: 201,
+            status: 200,
             message: "User has been updated successfully"
         })
 
