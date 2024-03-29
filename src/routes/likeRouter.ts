@@ -62,6 +62,6 @@ const routerLikes = express.Router();
  */
 
 routerLikes.post("/blogs/:id/likes",authenticateUser,  like);
-routerLikes.get("/blogs/:id/likes",authenticateUser,   getLikes);
+routerLikes.get("/blogs/:id/likes", getLikes);
 
 export default routerLikes;
