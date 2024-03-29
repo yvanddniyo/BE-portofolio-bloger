@@ -22,7 +22,7 @@ export const like = async (req: Request, res: Response) => {
 
     if (existingLike) {
       await dislike(existingLike._id);
-      res.status(200).json({ status: "success", message: "Like removed successfully" });
+      res.status(201).json({ status: "success", message: "Like removed successfully" });
     } else {
       const blog: any = await getSingleBlog(id);
       if (!blog) {
