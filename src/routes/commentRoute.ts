@@ -71,6 +71,6 @@ import authenticateUser from "../middlewares/userAccess";
  *         content: This is a comment.
  */
 routerComment.post("/blogs/:id/comments", authenticateUser, commentController.createComment)
-routerComment.get("/blogs/:id/comments", authenticateUser, commentController.viewAllComment)
+routerComment.get("/blogs/:id/comments", commentController.viewAllComment)
 
 export default routerComment
