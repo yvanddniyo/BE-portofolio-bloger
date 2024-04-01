@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import Likes from "../models/blogLikes"
 
 export const createLike = async (id: string, userId: string) => {
-  const Likea = await Like.create({
+  const Likea = await Likes.create({
     blog: id,
     user: new mongoose.Types.ObjectId(userId),
   });
@@ -12,7 +12,7 @@ export const createLike = async (id: string, userId: string) => {
 
 export const getSingleLike = async (blogId: string, userId: string) => {
   const like = await Like.findOne({
-    // blog: blogId
+    blog: blogId,
     user: userId
   });
   console.log(like)
