@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "dev": "npm run build && nodemon dist/index.js",
+    "build": "node init && tsc",
+    "dev": "node init && npm run build && nodemon dist/index.js",
     "test": "jest --detectOpenHandles --coverage --forceExit",
     "coveralls": "jest --coverage --forceExit --detectOpenHandles"
   },
@@ -37,6 +37,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",
     "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.0",
     "pino": "^8.19.0",
     "prom-client": "^15.1.0",
